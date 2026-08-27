@@ -97,9 +97,12 @@ export default function App() {
           <CategoryRail slug="salud" label="A tu salud" variant="scroll" exclude={railExclude} />
         </SectionBoundary>
 
+        <SectionBoundary>
+          <PreviousEditions />
+        </SectionBoundary>
+
         <AdSlot size="billboard" slot="portada-bottom" className="ad-row" />
       </main>
-      <PreviousEditions />
       <Footer />
       <FloatingIssue />
     </>

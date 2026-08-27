@@ -1,10 +1,13 @@
 .editions {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-bottom: var(--space-8);
   padding-block: var(--space-12);
   color: var(--color-paper);
   background:
     radial-gradient(50rem 20rem at 100% 0%, rgb(120 195 70 / 0.16), transparent 60%),
     #1a1a1a;
-  border-top: 3px solid var(--color-brand);
+  border-block: 3px solid var(--color-brand);
 }
 
 .editions__head {
