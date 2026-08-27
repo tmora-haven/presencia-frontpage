@@ -19,6 +19,7 @@ export const LATEST_COUNT = 12; // 4 for the "Lo más reciente" list, the rest f
 export const FEATURED_TAG = 'noticias-destacadas';
 export const FEATURED_COUNT = 5;
 export const RAIL_COUNT = 4;
+export const PRINT_COUNT = 11; // current issue + ten previous editions
 
 export const wpKeys = {
   all: ['wp'] as const,
@@ -89,7 +90,7 @@ export function useCategoryFeed(
   });
 }
 
-export function usePrintEditions(count = 1) {
+export function usePrintEditions(count = PRINT_COUNT) {
   return useQuery({
     queryKey: wpKeys.print(count),
     queryFn: ({ signal }) => getPrintEditions(count, signal),

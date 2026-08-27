@@ -22,6 +22,8 @@ la fuente de verdad y esta aplicación lo consume como un *headless CMS*.
 | Slideshow accesible de «noticias destacadas» (etiqueta), con autoplay respetuoso | `FeaturedSlideshow.tsx` |
 | Sub-marca **Presencia Femenina** con su propia identidad y chips de subcategorías | `FemeninaSection.tsx` |
 | Sección tipográfica para **La Palabra del Día** (columna sin imágenes) | `PalabraSection.tsx` |
+| Edición impresa: número actual destacado + tira de 10 ediciones anteriores | `PrintEdition.tsx` |
+| Botón flotante de la última edición (se oculta sobre su sección, descartable por sesión) | `FloatingIssue.tsx` |
 | Ticker «Último minuto» (pausa al pasar el cursor, estático con *reduced motion*) | `Ticker.tsx` |
 | Estados de carga (*skeletons*), error por sección con reintento y vacíos | `SectionState.tsx`, `SectionBoundary.tsx` |
 | Seguridad: ningún HTML de la API llega al DOM | `src/lib/decodeHtml.ts` + pruebas |
@@ -85,7 +87,7 @@ npm run build             # producción en dist/ (desplegable en cualquier hosti
 npm run preview           # sirve dist/
 npm run typecheck         # TypeScript estricto
 npm run lint              # oxlint
-npm test                  # Vitest + Testing Library + MSW (31 pruebas)
+npm test                  # Vitest + Testing Library + MSW (35 pruebas)
 npm run e2e               # Playwright: smoke test estructural contra el sitio en vivo
 ```
 

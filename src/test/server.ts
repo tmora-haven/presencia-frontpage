@@ -44,7 +44,16 @@ export const handlers = [
     if (slug === 'noticias-destacadas') return HttpResponse.json([{ id: 15632, name: 'noticias destacadas', slug, count: 750 }]);
     return HttpResponse.json([]);
   }),
-  http.get(`${API}/wp/v2/impreso`, () => HttpResponse.json([])),
+  http.get(`${API}/wp/v2/impreso`, ({ request }) => {
+    const perPage = Number(new URL(request.url).searchParams.get('per_page') ?? 1);
+    return HttpResponse.json(
+      Array.from({ length: perPage }, (_, i) => {
+        const p = makePost({ id: 900 + i, title: { rendered: `Edición ${700 - i}` } });
+        delete p.excerpt;
+        return p;
+      }),
+    );
+  }),
   http.get(`${API}/wp/v2/pages`, () => HttpResponse.json([])),
 ];
 

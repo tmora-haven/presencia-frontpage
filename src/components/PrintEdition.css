@@ -4,34 +4,76 @@
 
 .print__inner {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+  flex-direction: column;
   gap: var(--space-8);
-  padding: var(--space-8);
-  background: var(--color-ink);
+  padding: var(--space-6);
   color: var(--color-paper);
+  background:
+    radial-gradient(40rem 20rem at 0% 0%, rgb(120 195 70 / 0.18), transparent 60%),
+    var(--color-ink);
   border-radius: var(--radius);
 }
 
+@media (min-width: 40rem) {
+  .print__inner {
+    padding: var(--space-8);
+  }
+}
+
+/* ---------- current issue ---------- */
+.print__current {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-8);
+}
+
 .print__cover {
+  display: block;
   flex: 0 0 auto;
-  width: clamp(8rem, 30vw, 14rem);
-  box-shadow: 0 12px 30px rgb(0 0 0 / 0.45);
+  overflow: hidden;
+  border-radius: 3px;
+  background: var(--color-ink-soft);
+}
+
+.print__current > .print__cover {
+  width: clamp(9rem, 40vw, 16rem);
+  box-shadow: 0 24px 40px -16px rgb(0 0 0 / 0.7);
   transform: rotate(-2deg);
+  transition: transform 0.3s ease;
+}
+
+.print__current > .print__cover:hover {
+  transform: rotate(0) scale(1.02);
 }
 
 .print__cover img {
-  border-radius: 3px;
+  width: 100%;
+  aspect-ratio: 1624 / 1733;
+  object-fit: cover;
+}
+
+.print__cover-placeholder {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1624 / 1733;
+  padding: var(--space-2);
+  font-size: var(--text-xs);
+  text-align: center;
+  color: var(--color-paper);
 }
 
 .print__body {
-  flex: 1 1 16rem;
+  flex: 1 1 18rem;
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
 }
 
 .print__kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
   font-size: var(--text-xs);
   font-weight: 700;
   letter-spacing: 0.1em;
@@ -39,26 +81,159 @@
   color: var(--color-brand);
 }
 
+.print__pulse {
+  width: 0.5rem;
+  height: 0.5rem;
+  background: currentColor;
+  border-radius: 999px;
+  animation: print-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes print-pulse {
+  50% {
+    opacity: 0.3;
+  }
+}
+
 .print__title {
-  font-size: var(--text-2xl);
+  font-size: var(--text-3xl);
   font-weight: 700;
-  letter-spacing: -0.02em;
+  line-height: 1;
+  letter-spacing: -0.03em;
 }
 
 .print__date {
   color: rgb(255 255 255 / 0.7);
 }
 
-.print__cta {
-  align-self: flex-start;
+.print__blurb {
+  max-width: 44ch;
+  color: rgb(255 255 255 / 0.8);
+}
+
+.print__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
   margin-top: var(--space-3);
+}
+
+.print__cta {
   padding: var(--space-3) var(--space-6);
-  font-weight: 600;
+  font-weight: 700;
   color: var(--color-ink);
   background: var(--color-brand);
   border-radius: var(--radius);
+  transition: background 0.15s;
 }
 
 .print__cta:hover {
   background: #8ed35c;
+}
+
+.print__archive {
+  font-weight: 600;
+  color: rgb(255 255 255 / 0.85);
+  border-bottom: 1px solid rgb(255 255 255 / 0.35);
+}
+
+.print__archive:hover {
+  color: var(--color-brand);
+  border-color: var(--color-brand);
+}
+
+/* ---------- previous editions strip ---------- */
+.print__previous {
+  padding-top: var(--space-6);
+  border-top: 1px solid rgb(255 255 255 / 0.15);
+}
+
+.print__previous-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.print__previous-title {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 0.7);
+}
+
+.print__nav {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.print__arrow {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--color-paper);
+  background: rgb(255 255 255 / 0.1);
+  border: 1px solid rgb(255 255 255 / 0.25);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.print__arrow:hover {
+  color: var(--color-ink);
+  background: var(--color-brand);
+}
+
+.print__strip {
+  display: flex;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0 0 var(--space-2);
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+  scrollbar-color: rgb(255 255 255 / 0.3) transparent;
+}
+
+.print__item {
+  flex: 0 0 9rem;
+  scroll-snap-align: start;
+}
+
+.print__item-link {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.print__item .print__cover {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.print__item-link:hover .print__cover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 24px -12px rgb(0 0 0 / 0.8);
+}
+
+.print__item-title {
+  font-weight: 700;
+  font-size: var(--text-sm);
+}
+
+.print__item-date {
+  font-size: var(--text-xs);
+  color: rgb(255 255 255 / 0.6);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .print__pulse {
+    animation: none;
+  }
 }

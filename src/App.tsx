@@ -2,6 +2,7 @@ import { useFeatured, useLatest } from './hooks/useWp';
 import { AdSlot } from './components/AdSlot';
 import { CategoryRail } from './components/CategoryRail';
 import { FemeninaSection } from './components/FemeninaSection';
+import { FloatingIssue } from './components/FloatingIssue';
 import { Footer } from './components/Footer';
 import { LeadStories } from './components/LeadStories';
 import { Masthead } from './components/Masthead';
@@ -71,6 +72,7 @@ export default function App() {
         </SectionBoundary>
       </main>
       <Footer />
+      <FloatingIssue />
     </>
   );
 }
