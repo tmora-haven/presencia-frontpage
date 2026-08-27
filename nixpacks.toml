@@ -1,0 +1,13 @@
+# Coolify "Nixpacks" build pack alternative to the Dockerfile.
+# Set VITE_WP_API_URL in the app's build-time environment variables.
+[phases.setup]
+nixPkgs = ["nodejs_22"]
+
+[phases.install]
+cmds = ["npm ci --no-audit --no-fund"]
+
+[phases.build]
+cmds = ["npm run build"]
+
+[start]
+cmd = "npx --yes serve -s dist -l 3000"
