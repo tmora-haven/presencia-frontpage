@@ -1,0 +1,50 @@
+# Static hosting for the Vite build (single-page app: unknown paths fall back to index.html).
+# Rendered by the nginx image's envsubst at container start; ${WP_ORIGIN} is the
+# only substituted variable (see NGINX_ENVSUBST_FILTER in the Dockerfile).
+server {
+    listen 80;
+    server_name _;
+    root /usr/share/nginx/html;
+    index index.html;
+
+    # --- security headers -------------------------------------------------
+    # Only the WordPress origin (API + images) and Google Fonts are allowed.
+    add_header Content-Security-Policy "default-src 'self'; connect-src 'self' ${WP_ORIGIN}; img-src 'self' data: ${WP_ORIGIN}; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-Frame-Options "DENY" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    add_header Permissions-Policy "camera=(), microphone=(), geolocation=()" always;
+
+    # --- compression ------------------------------------------------------
+    gzip on;
+    gzip_vary on;
+    gzip_types text/plain text/css application/javascript application/json image/svg+xml;
+    gzip_min_length 1024;
+
+    # --- caching ----------------------------------------------------------
+    # Vite fingerprints everything under /assets → cache forever.
+    location /assets/ {
+        add_header Cache-Control "public, max-age=31536000, immutable" always;
+        try_files $uri =404;
+    }
+
+    location /brand/ {
+        add_header Cache-Control "public, max-age=604800" always;
+        try_files $uri =404;
+    }
+
+    # index.html must always be revalidated so new deploys are picked up.
+    location = /index.html {
+        add_header Cache-Control "no-cache" always;
+    }
+
+    location = /healthz {
+        access_log off;
+        add_header Content-Type text/plain;
+        return 200 "ok";
+    }
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+}
