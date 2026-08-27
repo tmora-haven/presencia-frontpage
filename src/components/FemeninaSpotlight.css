@@ -1,0 +1,137 @@
+.spot {
+  --fem-magenta: #e5007e;
+  --fem-lime: #8dc63f;
+  --fem-serif: 'Roboto Slab', Georgia, serif;
+
+  display: flex;
+  min-width: 0;
+  color: var(--color-paper);
+  background:
+    radial-gradient(28rem 18rem at 100% 100%, rgb(141 198 63 / 0.35), transparent 65%),
+    var(--fem-magenta);
+  border-radius: var(--radius);
+}
+
+.spot__inner {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  min-width: 0;
+  padding: var(--space-4);
+}
+
+@media (min-width: 48rem) {
+  .spot__inner {
+    gap: var(--space-5, 1.25rem);
+    padding: var(--space-5, 1.25rem);
+  }
+}
+
+.spot__media {
+  display: block;
+  flex: 0 0 clamp(4.5rem, 24%, 8rem);
+  width: clamp(4.5rem, 24%, 8rem);
+  overflow: hidden;
+  border-radius: 3px;
+  box-shadow: 0 24px 40px -16px rgb(0 0 0 / 0.6);
+  transform: rotate(2deg);
+  transition: transform 0.3s ease;
+}
+
+.spot__media:hover {
+  transform: rotate(0) scale(1.02);
+}
+
+.spot__media img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+.spot__placeholder {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 4 / 5;
+  font-size: 3rem;
+  color: var(--fem-lime);
+  background: rgb(0 0 0 / 0.2);
+}
+
+.spot__body {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.spot__brand {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.2em;
+  margin-bottom: var(--space-1);
+  line-height: 1;
+}
+
+.spot__brand-script {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  font-size: var(--text-sm);
+  opacity: 0.9;
+}
+
+.spot__brand-word {
+  font-size: var(--text-base);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.spot__brand-mark {
+  font-size: var(--text-lg);
+  color: var(--fem-lime);
+}
+
+.spot__kicker {
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fem-lime);
+}
+
+.spot__title {
+  font-family: var(--fem-serif);
+  font-size: var(--text-lg);
+  overflow-wrap: anywhere;
+  font-weight: 700;
+  line-height: 1.2;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.spot__title a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.spot__cta {
+  align-self: flex-start;
+  white-space: nowrap;
+  margin-top: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--fem-magenta);
+  background: var(--color-paper);
+  border-radius: var(--radius);
+  transition: background 0.15s;
+}
+
+.spot__cta:hover {
+  background: #ffe3f1;
+}

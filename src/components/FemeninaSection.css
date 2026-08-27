@@ -1,0 +1,189 @@
+/* Sub-brand tokens, scoped to the section */
+.fem {
+  --fem-magenta: #e5007e;
+  --fem-magenta-deep: #b8005f;
+  --fem-lime: #8dc63f;
+  --fem-blush: #fff0f7;
+  --fem-ink: #54595f;
+  --fem-serif: 'Roboto Slab', Georgia, 'Times New Roman', serif;
+
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-bottom: var(--space-16);
+  padding-block: var(--space-12);
+  color: var(--fem-ink);
+  background:
+    radial-gradient(60rem 30rem at 100% 0%, rgb(141 198 63 / 0.18), transparent 60%),
+    radial-gradient(50rem 30rem at 0% 100%, rgb(229 0 126 / 0.12), transparent 60%),
+    var(--fem-blush);
+  border-block: 4px solid var(--fem-magenta);
+}
+
+.fem__inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+}
+
+.fem__head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  text-align: center;
+}
+
+.fem__logo img {
+  width: clamp(12rem, 40vw, 20rem);
+}
+
+.fem__tagline {
+  font-family: var(--fem-serif);
+  font-size: var(--text-lg);
+  font-style: italic;
+}
+
+.fem__chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2);
+  margin: var(--space-2) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fem__chips a {
+  display: inline-block;
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--fem-magenta-deep);
+  background: var(--color-paper);
+  border: 1.5px solid var(--fem-magenta);
+  border-radius: 999px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.fem__chips a:hover {
+  color: var(--color-paper);
+  background: var(--fem-magenta);
+}
+
+.fem__lead {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+  padding: var(--space-4);
+  background: var(--color-paper);
+  border-radius: var(--radius);
+  box-shadow: 0 20px 40px -24px rgb(229 0 126 / 0.35);
+}
+
+@media (min-width: 64rem) {
+  .fem__lead {
+    grid-template-columns: 1.1fr 1fr;
+    align-items: center;
+    padding: var(--space-6);
+  }
+}
+
+.fem__lead-media img,
+.fem__placeholder,
+.fem__card-media img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius);
+}
+
+.fem__placeholder {
+  background: var(--fem-blush) url('/brand/presencia-femenina-logo.png') center / 50% no-repeat;
+}
+
+.fem__lead-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.fem__kicker {
+  color: var(--fem-magenta);
+}
+
+.fem__lead-title {
+  font-family: var(--fem-serif);
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-ink);
+}
+
+.fem__lead-title a:hover,
+.fem__card-title a:hover {
+  color: var(--fem-magenta);
+}
+
+.fem__excerpt {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.fem__meta {
+  font-size: var(--text-sm);
+  color: var(--color-ink-muted);
+}
+
+.fem__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-6) var(--space-4);
+}
+
+@media (min-width: 64rem) {
+  .fem__grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.fem__card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.fem__card-media {
+  overflow: hidden;
+  border-radius: var(--radius);
+  outline: 3px solid transparent;
+  outline-offset: 3px;
+  transition: outline-color 0.2s;
+}
+
+.fem__card:hover .fem__card-media {
+  outline-color: var(--fem-lime);
+}
+
+.fem__card-title {
+  font-family: var(--fem-serif);
+  font-size: var(--text-base);
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--color-ink);
+}
+
+.fem__cta {
+  justify-self: center;
+  padding: var(--space-3) var(--space-6);
+  font-weight: 700;
+  color: var(--color-paper);
+  background: var(--fem-magenta);
+  border-radius: 999px;
+  transition: background 0.15s;
+}
+
+.fem__cta:hover {
+  background: var(--fem-magenta-deep);
+}
