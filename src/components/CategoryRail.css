@@ -32,6 +32,10 @@
     align-items: start;
   }
 
+  .feature--no-ad {
+    grid-template-columns: 1.3fr 1fr;
+  }
+
   .feature__ad {
     position: sticky;
     top: 4rem;
@@ -170,6 +174,10 @@
   .scroll {
     display: grid;
     grid-template-columns: repeat(4, 1fr) auto;
+  }
+
+  .scroll--no-ad {
+    grid-template-columns: repeat(4, 1fr);
     gap: var(--space-6);
     margin-inline: 0;
     padding-inline: 0;
@@ -178,5 +186,30 @@
 
   .scroll__item {
     flex: none;
+  }
+}
+
+/* ---------- list: dense two-column ---------- */
+.list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+}
+
+.list > * {
+  padding-bottom: var(--space-6);
+  border-bottom: 1px solid var(--color-rule);
+}
+
+@media (min-width: 40rem) {
+  .list {
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: var(--space-8);
+  }
+}
+
+@media (min-width: 64rem) {
+  .list {
+    grid-template-columns: repeat(3, 1fr);
   }
 }

@@ -18,7 +18,9 @@ la fuente de verdad y esta aplicación lo consume como un *headless CMS*.
 | Custom post types (`impreso`) y taxonomías personalizadas (`pueblo` junto a la categoría) | `PrintEdition.tsx`, `Kicker.tsx` |
 | Menú derivado de la API (las categorías más usadas) con *drawer* móvil accesible | `NavBar.tsx` |
 | 8 espacios publicitarios etiquetados con tamaños IAB exactos por breakpoint (sin *layout shift*) | `AdSlot.tsx` |
-| Tres presentaciones de sección con un solo hook: destacada, opinión, carrusel | `CategoryRail.tsx` |
+| Cuatro presentaciones de sección con un solo hook: destacada, opinión, carrusel, lista | `CategoryRail.tsx` |
+| Secciones Regionales, Policiacas, Gobierno y política, Nacionales con etiqueta solo de *pueblo* | `App.tsx`, `Kicker.tsx` |
+| Archivo «Ediciones anteriores» (10 números previos) antes del pie | `PreviousEditions.tsx` |
 | Slideshow accesible de «noticias destacadas» (etiqueta), con autoplay respetuoso | `FeaturedSlideshow.tsx` |
 | Sub-marca **Presencia Femenina** con su propia identidad y chips de subcategorías | `FemeninaSection.tsx` |
 | Sección tipográfica para **La Palabra del Día** (columna sin imágenes) | `PalabraSection.tsx` |
@@ -90,7 +92,7 @@ npm run build             # producción en dist/ (desplegable en cualquier hosti
 npm run preview           # sirve dist/
 npm run typecheck         # TypeScript estricto
 npm run lint              # oxlint
-npm test                  # Vitest + Testing Library + MSW (39 pruebas)
+npm test                  # Vitest + Testing Library + MSW (42 pruebas)
 npm run e2e               # Playwright: smoke test estructural contra el sitio en vivo
 ```
 

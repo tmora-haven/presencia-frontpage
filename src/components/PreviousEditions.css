@@ -1,0 +1,125 @@
+.editions {
+  padding-block: var(--space-12);
+  color: var(--color-paper);
+  background:
+    radial-gradient(50rem 20rem at 100% 0%, rgb(120 195 70 / 0.16), transparent 60%),
+    #1a1a1a;
+  border-top: 3px solid var(--color-brand);
+}
+
+.editions__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-8);
+}
+
+.editions__title {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.editions__sub {
+  margin-top: var(--space-1);
+  color: rgb(255 255 255 / 0.65);
+}
+
+.editions__nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.editions__archive {
+  margin-right: var(--space-2);
+  font-weight: 600;
+  color: rgb(255 255 255 / 0.85);
+  border-bottom: 1px solid rgb(255 255 255 / 0.35);
+}
+
+.editions__archive:hover {
+  color: var(--color-brand);
+  border-color: var(--color-brand);
+}
+
+.editions__arrow {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--color-paper);
+  background: rgb(255 255 255 / 0.1);
+  border: 1px solid rgb(255 255 255 / 0.25);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.editions__arrow:hover {
+  color: var(--color-ink);
+  background: var(--color-brand);
+}
+
+.editions__strip {
+  display: flex;
+  gap: var(--space-6);
+  margin: 0;
+  padding: 0 0 var(--space-2);
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+  scrollbar-color: rgb(255 255 255 / 0.3) transparent;
+}
+
+.editions__item {
+  flex: 0 0 10rem;
+  scroll-snap-align: start;
+}
+
+.editions__link {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.editions__cover {
+  display: block;
+  overflow: hidden;
+  border-radius: 3px;
+  background: var(--color-ink-soft);
+  box-shadow: 0 16px 24px -12px rgb(0 0 0 / 0.8);
+  transition: transform 0.25s ease;
+}
+
+.editions__link:hover .editions__cover {
+  transform: translateY(-4px);
+}
+
+.editions__cover img,
+.editions__placeholder {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1624 / 1733;
+  object-fit: cover;
+}
+
+.editions__placeholder {
+  display: grid;
+  place-items: center;
+  font-size: var(--text-xs);
+  text-align: center;
+}
+
+.editions__name {
+  font-weight: 700;
+}
+
+.editions__date {
+  font-size: var(--text-xs);
+  color: rgb(255 255 255 / 0.6);
+}

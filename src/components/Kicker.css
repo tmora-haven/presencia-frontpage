@@ -26,3 +26,8 @@
   background: currentColor;
   border-radius: 999px;
 }
+
+.kicker--pueblo-only .kicker__pueblo {
+  font-weight: 700;
+  color: var(--color-brand-deep);
+}

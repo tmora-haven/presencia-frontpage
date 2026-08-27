@@ -9,7 +9,7 @@ test('frontpage renders live content from the WordPress API', async ({ page }) =
   await page.goto('/');
   await expect(page.getByRole('banner')).toBeVisible();
   await expect(page.getByRole('heading', { level: 1 })).not.toBeEmpty({ timeout: 20_000 });
-  await expect(page.getByRole('heading', { name: 'Últimas noticias' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Regionales' })).toBeVisible({ timeout: 20_000 });
   await expect(page.getByRole('region').filter({ hasText: 'Ver todo' }).first()).toBeVisible({ timeout: 20_000 });
   await expect(page.getByRole('contentinfo')).toBeVisible();
   // Every external link must be hardened.

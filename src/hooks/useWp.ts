@@ -15,7 +15,9 @@ import {
   getChildCategories,
 } from '../lib/wpClient';
 
-export const LATEST_COUNT = 12; // 4 for the "Lo más reciente" list, the rest fill the bento grid
+export const LATEST_COUNT = 4; // the "Lo más reciente" list beside the slideshow
+export const BENTO_SLUG = 'regionales';
+export const BENTO_COUNT = 8;
 export const FEATURED_TAG = 'noticias-destacadas';
 export const FEATURED_COUNT = 5;
 export const RAIL_COUNT = 4;

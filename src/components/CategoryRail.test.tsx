@@ -26,6 +26,21 @@ describe('<CategoryRail />', () => {
     expect(document.querySelectorAll('article time')).toHaveLength(0);
   });
 
+  it('kicker="pueblo" hides the category and ad={false} drops the slot', async () => {
+    renderWithQuery(<CategoryRail slug="policiacas" label="Policiacas" kicker="pueblo" ad={false} exclude={[]} />);
+    await screen.findByRole('link', { name: 'Titular 1 – prueba' });
+    const kicker = document.querySelector('.kicker');
+    expect(kicker).toHaveTextContent('Río Grande');
+    expect(kicker).not.toHaveTextContent('Regionales');
+    expect(screen.queryByRole('complementary', { name: 'Publicidad' })).not.toBeInTheDocument();
+  });
+
+  it('list variant renders every article as a horizontal card', async () => {
+    renderWithQuery(<CategoryRail slug="nacionales" label="Nacionales" variant="list" count={6} exclude={[]} />);
+    await screen.findByRole('link', { name: 'Titular 1 – prueba' });
+    expect(document.querySelectorAll('.list .card--horizontal')).toHaveLength(6);
+  });
+
   it('opinion variant shows a featured image per article', async () => {
     renderWithQuery(<CategoryRail slug="deportes" label="Deportes" variant="opinion" exclude={[]} />);
     await screen.findByRole('link', { name: 'Titular 1 – prueba' });

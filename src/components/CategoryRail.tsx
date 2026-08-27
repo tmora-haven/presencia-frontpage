@@ -1,13 +1,13 @@
 import { useCategoryFeed } from '../hooks/useWp';
 import type { Article } from '../lib/types';
-import { Kicker } from './Kicker';
+import { Kicker, type KickerMode } from './Kicker';
 import { AdSlot } from './AdSlot';
 import { ArticleCard } from './ArticleCard';
 import { SectionHeading } from './SectionHeading';
 import { SectionError, Skeleton } from './SectionState';
 import './CategoryRail.css';
 
-export type RailVariant = 'feature' | 'opinion' | 'scroll';
+export type RailVariant = 'feature' | 'opinion' | 'scroll' | 'list';
 
 interface Props {
   slug: string;
@@ -18,6 +18,10 @@ interface Props {
   exclude: number[] | undefined;
   /** Leave out posts that also belong to this category (avoids cross-section duplicates). */
   excludeCategorySlug?: string;
+  /** 'pueblo' hides the category name (redundant under the section heading). */
+  kicker?: KickerMode;
+  /** Whether the variant's built-in ad slot is rendered. */
+  ad?: boolean;
 }
 
 const CATEGORY_BASE = 'https://presenciapr.com/category/';
@@ -28,7 +32,16 @@ const CATEGORY_BASE = 'https://presenciapr.com/category/';
  *  - opinion: text-first, tinted band with oversized quote marks (for Editorial)
  *  - scroll:  horizontal snap-scroll cards on small screens, 4-up on desktop
  */
-export function CategoryRail({ slug, label, variant = 'feature', count, exclude, excludeCategorySlug }: Props) {
+export function CategoryRail({
+  slug,
+  label,
+  variant = 'feature',
+  count,
+  exclude,
+  excludeCategorySlug,
+  kicker = 'full',
+  ad = true,
+}: Props) {
   const { data, isPending, isError, error, refetch, isFetching } = useCategoryFeed(slug, count, exclude, excludeCategorySlug);
   const headingId = `rail-${slug}`;
   const className = `rail rail--${variant}`;
@@ -61,30 +74,47 @@ export function CategoryRail({ slug, label, variant = 'feature', count, exclude,
     <section className={className} aria-labelledby={headingId}>
       <div className={variant === 'opinion' ? 'container' : undefined}>
         <SectionHeading id={headingId} title={data.category.name} href={href} />
-        {variant === 'feature' && <FeatureLayout articles={data.articles} slug={slug} />}
-        {variant === 'opinion' && <OpinionLayout articles={data.articles} />}
-        {variant === 'scroll' && <ScrollLayout articles={data.articles} slug={slug} />}
+        {variant === 'feature' && <FeatureLayout articles={data.articles} slug={slug} kicker={kicker} ad={ad} />}
+        {variant === 'opinion' && <OpinionLayout articles={data.articles} kicker={kicker} />}
+        {variant === 'scroll' && <ScrollLayout articles={data.articles} slug={slug} kicker={kicker} ad={ad} />}
+        {variant === 'list' && <ListLayout articles={data.articles} kicker={kicker} />}
       </div>
     </section>
   );
 }
 
-function FeatureLayout({ articles, slug }: { articles: Article[]; slug: string }) {
+interface LayoutProps {
+  articles: Article[];
+  kicker: KickerMode;
+}
+
+function FeatureLayout({ articles, slug, kicker, ad }: LayoutProps & { slug: string; ad: boolean }) {
   const [lead, ...others] = articles;
   return (
-    <div className="feature">
-      <ArticleCard article={lead} showExcerpt imageSizes="(min-width: 64rem) 40vw, 100vw" />
+    <div className={`feature ${ad ? '' : 'feature--no-ad'}`}>
+      <ArticleCard article={lead} showExcerpt imageSizes="(min-width: 64rem) 40vw, 100vw" kicker={kicker} />
       <div className="feature__list">
         {others.map((a) => (
-          <ArticleCard key={a.id} article={a} layout="horizontal" imageSizes="20vw" />
+          <ArticleCard key={a.id} article={a} layout="horizontal" imageSizes="20vw" kicker={kicker} />
         ))}
       </div>
-      <AdSlot size="halfpage" slot={`rail-${slug}`} className="feature__ad" />
+      {ad ? <AdSlot size="halfpage" slot={`rail-${slug}`} className="feature__ad" /> : null}
     </div>
   );
 }
 
-function OpinionLayout({ articles }: { articles: Article[] }) {
+/** Two-column list of horizontal cards — dense, for high-volume categories. */
+function ListLayout({ articles, kicker }: LayoutProps) {
+  return (
+    <div className="list">
+      {articles.map((a) => (
+        <ArticleCard key={a.id} article={a} layout="horizontal" imageSizes="(min-width: 64rem) 15vw, 35vw" kicker={kicker} />
+      ))}
+    </div>
+  );
+}
+
+function OpinionLayout({ articles, kicker }: LayoutProps) {
   return (
     <div className="opinion">
       {articles.map((a) => (
@@ -108,7 +138,7 @@ function OpinionLayout({ articles }: { articles: Article[] }) {
               “
             </span>
           </a>
-          <Kicker article={a} />
+          <Kicker article={a} mode={kicker} />
           <h3 className="opinion__title">
             <a className="headline-link" href={a.url} target="_blank" rel="noopener noreferrer">
               {a.title}
@@ -122,17 +152,19 @@ function OpinionLayout({ articles }: { articles: Article[] }) {
   );
 }
 
-function ScrollLayout({ articles, slug }: { articles: Article[]; slug: string }) {
+function ScrollLayout({ articles, slug, kicker, ad }: LayoutProps & { slug: string; ad: boolean }) {
   return (
-    <div className="scroll" tabIndex={0}>
+    <div className={`scroll ${ad ? '' : 'scroll--no-ad'}`} tabIndex={0}>
       {articles.map((a) => (
         <div key={a.id} className="scroll__item">
-          <ArticleCard article={a} imageSizes="(min-width: 64rem) 25vw, 70vw" />
+          <ArticleCard article={a} imageSizes="(min-width: 64rem) 25vw, 70vw" kicker={kicker} />
         </div>
       ))}
-      <div className="scroll__item scroll__item--ad">
-        <AdSlot size="rectangle" slot={`rail-${slug}`} />
-      </div>
+      {ad ? (
+        <div className="scroll__item scroll__item--ad">
+          <AdSlot size="rectangle" slot={`rail-${slug}`} />
+        </div>
+      ) : null}
     </div>
   );
 }

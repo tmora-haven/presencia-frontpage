@@ -15,9 +15,13 @@ describe('<LeadStories />', () => {
     const hero = await screen.findByRole('heading', { level: 1 });
     expect(hero).toHaveTextContent('Titular 101 – prueba'); // from the "destacadas" tag query
     expect(screen.getByRole('region', { name: 'Noticias destacadas' })).toBeInTheDocument();
-    const latest = screen.getByRole('region', { name: 'Últimas noticias' });
-    expect(within(latest).getAllByRole('article')).toHaveLength(8);
+    const latest = await screen.findByRole('region', { name: 'Regionales' });
+    await waitFor(() => expect(within(latest).getAllByRole('article').length).toBeGreaterThan(0));
     expect(within(latest).getByRole('complementary', { name: 'Publicidad' })).toBeInTheDocument();
+    // pueblo-only kickers inside the Regionales grid
+    const kicker = latest.querySelector('.kicker');
+    expect(kicker).toHaveTextContent('Río Grande');
+    expect(kicker).not.toHaveTextContent('Regionales');
     const side = screen.getByRole('complementary', { name: 'Lo más reciente' });
     expect(within(side).getByRole('complementary', { name: 'Publicidad' })).toHaveAttribute('data-ad-slot', 'portada-lateral');
   });

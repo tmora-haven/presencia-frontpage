@@ -1,4 +1,4 @@
-import { useFeatured, useLatest } from '../hooks/useWp';
+import { BENTO_COUNT, BENTO_SLUG, useCategoryFeed, useFeatured, useLatest } from '../hooks/useWp';
 import { AdSlot } from './AdSlot';
 import { ArticleCard } from './ArticleCard';
 import { FeaturedSlideshow } from './FeaturedSlideshow';
@@ -10,7 +10,6 @@ import { SectionHeading } from './SectionHeading';
 import { SectionError, Skeleton } from './SectionState';
 import './LeadStories.css';
 
-const HERO_SIDE = 4; // numbered "Lo más reciente" list next to the hero
 const BENTO_AD_INDEX = 2; // where the rectangle ad sits inside the bento grid
 
 /**
@@ -22,6 +21,12 @@ const BENTO_AD_INDEX = 2; // where the rectangle ad sits inside the bento grid
 export function LeadStories() {
   const { data, isPending, isError, error, refetch, isFetching } = useLatest();
   const featured = useFeatured();
+  // Bento: Regionales, minus anything already shown in the side list or the slideshow.
+  const bentoExclude =
+    data !== undefined && (featured.data !== undefined || featured.isError)
+      ? [...data, ...(featured.data ?? [])].map((a) => a.id)
+      : undefined;
+  const bento = useCategoryFeed(BENTO_SLUG, BENTO_COUNT, bentoExclude);
 
   if (isPending) {
     return (
@@ -48,8 +53,7 @@ export function LeadStories() {
   }
 
   if (data.length === 0) return null;
-  const side = data.slice(0, HERO_SIDE);
-  const bento = data.slice(HERO_SIDE);
+  const side = data;
   // Featured still loading → hold the slot with a skeleton; failed/empty → promote the latest story.
   const slides = featured.data && featured.data.length > 0 ? featured.data : featured.isPending ? null : data.slice(0, 1);
 
@@ -86,17 +90,33 @@ export function LeadStories() {
         ) : null}
       </section>
 
-      {bento.length > 0 ? (
-        <section className="latest" aria-labelledby="latest-title">
-          <SectionHeading id="latest-title" title="Últimas noticias" href="https://presenciapr.com/" />
+      {bento.isPending ? (
+        <section className="latest" aria-busy="true" aria-label="Cargando Regionales">
           <div className="bento">
-            {bento.map((article, i) => {
+            <Skeleton variant="card" count={4} />
+          </div>
+        </section>
+      ) : bento.isError ? (
+        <section className="latest" aria-labelledby="latest-title">
+          <SectionHeading id="latest-title" title="Regionales" />
+          <SectionError message={bento.error.message} onRetry={() => bento.refetch()} retrying={bento.isFetching} />
+        </section>
+      ) : bento.data && bento.data.articles.length > 0 ? (
+        <section className="latest" aria-labelledby="latest-title">
+          <SectionHeading
+            id="latest-title"
+            title={bento.data.category.name}
+            href={`https://presenciapr.com/category/${bento.data.category.slug}/`}
+          />
+          <div className="bento">
+            {bento.data.articles.map((article, i) => {
               const card = (
                 <ArticleCard
                   key={article.id}
                   article={article}
                   showExcerpt={i === 0}
                   imageSizes={i === 0 ? '(min-width: 64rem) 50vw, 100vw' : '(min-width: 64rem) 25vw, 50vw'}
+                  kicker="pueblo"
                 />
               );
               if (i !== BENTO_AD_INDEX) return card;

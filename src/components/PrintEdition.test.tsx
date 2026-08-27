@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import { renderWithQuery } from '../test/render';
 import { FloatingIssue } from './FloatingIssue';
+import { PreviousEditions } from './PreviousEditions';
 import { PrintEdition } from './PrintEdition';
 
 describe('<PrintEdition />', () => {
@@ -32,6 +33,17 @@ describe('<PrintEdition card />', () => {
     renderWithQuery(<PrintEdition card />);
     expect(await screen.findByRole('heading', { name: 'Edición 700' })).toBeInTheDocument();
     expect(screen.queryByRole('list', { name: 'Ediciones anteriores' })).not.toBeInTheDocument();
+  });
+});
+
+describe('<PreviousEditions />', () => {
+  it('lists the ten editions before the current one', async () => {
+    renderWithQuery(<PreviousEditions />);
+    const strip = await screen.findByRole('list', { name: 'Ediciones anteriores' });
+    const items = within(strip).getAllByRole('listitem');
+    expect(items).toHaveLength(10);
+    expect(items[0]).toHaveTextContent('Edición 699');
+    expect(within(strip).queryByText('Edición 700')).not.toBeInTheDocument();
   });
 });
 

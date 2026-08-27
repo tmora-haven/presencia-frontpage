@@ -35,6 +35,9 @@ export const handlers = [
     }
     const slug = params.get('slug');
     if (slug === 'deportes') return HttpResponse.json([{ id: 22, name: 'Deportes', slug, count: 10 }]);
+    if (slug === 'regionales') return HttpResponse.json([{ id: 4265, name: 'Regionales', slug, count: 100 }]);
+    if (slug === 'policiacas') return HttpResponse.json([{ id: 6140, name: 'Policiacas', slug, count: 50 }]);
+    if (slug === 'nacionales') return HttpResponse.json([{ id: 11104, name: 'Nacionales', slug, count: 40 }]);
     if (slug === 'presencia-femenina') return HttpResponse.json([{ id: 9743, name: 'Presencia Femenina', slug, count: 300 }]);
     if (slug === 'la-palabra-del-dia') return HttpResponse.json([{ id: 31, name: 'La Palabra del Día', slug, count: 600 }]);
     return HttpResponse.json([]);

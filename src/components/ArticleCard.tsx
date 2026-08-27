@@ -1,5 +1,5 @@
 import type { Article } from '../lib/types';
-import { Kicker } from './Kicker';
+import { Kicker, type KickerMode } from './Kicker';
 import './ArticleCard.css';
 
 interface Props {
@@ -8,6 +8,7 @@ interface Props {
   headingLevel?: 'h3' | 'h4';
   showExcerpt?: boolean;
   imageSizes?: string;
+  kicker?: KickerMode;
 }
 
 export function ArticleCard({
@@ -16,6 +17,7 @@ export function ArticleCard({
   headingLevel: Heading = 'h3',
   showExcerpt = false,
   imageSizes = '(min-width: 64rem) 25vw, (min-width: 40rem) 50vw, 100vw',
+  kicker = 'full',
 }: Props) {
   return (
     <article className={`card card--${layout}`}>
@@ -43,7 +45,7 @@ export function ArticleCard({
         )}
       </a>
       <div className="card__body">
-        <Kicker article={article} />
+        <Kicker article={article} mode={kicker} />
         <Heading className="card__title">
           <a className="headline-link" href={article.url} target="_blank" rel="noopener noreferrer">
             {article.title}
