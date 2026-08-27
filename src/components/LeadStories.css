@@ -1,0 +1,86 @@
+.lead__hero {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+  margin-bottom: var(--space-12);
+}
+
+@media (min-width: 64rem) {
+  .lead__hero {
+    grid-template-columns: 3fr 2fr;
+    align-items: center;
+    gap: var(--space-8);
+  }
+}
+
+.lead__hero-media {
+  display: block;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--color-paper-tint);
+}
+
+.lead__hero-placeholder {
+  background: var(--color-paper-tint) url('/brand/favicon.png') center / 5rem no-repeat;
+  opacity: 0.6;
+}
+
+.lead__hero-media img,
+.lead__hero-placeholder {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+
+.lead__hero-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.lead__kicker {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-brand-deep);
+}
+
+.lead__title {
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+}
+
+.lead__excerpt {
+  font-size: var(--text-lg);
+  line-height: 1.5;
+  color: var(--color-ink-soft);
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.lead__meta {
+  font-size: var(--text-sm);
+  color: var(--color-ink-muted);
+}
+
+.lead__latest {
+  margin-bottom: var(--space-16);
+}
+
+.lead__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-8) var(--space-4);
+}
+
+@media (min-width: 40rem) {
+  .lead__grid {
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    gap: var(--space-8) var(--space-6);
+  }
+}

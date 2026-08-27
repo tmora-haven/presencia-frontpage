@@ -1,0 +1,32 @@
+.rail {
+  margin-bottom: var(--space-16);
+}
+
+.rail__layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+}
+
+@media (min-width: 64rem) {
+  .rail__layout {
+    grid-template-columns: 1.2fr 1fr;
+  }
+}
+
+.rail__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.rail__list > * + * {
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--color-rule);
+}
+
+.rail__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(15rem, 100%), 1fr));
+  gap: var(--space-6);
+}

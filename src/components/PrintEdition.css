@@ -1,0 +1,64 @@
+.print {
+  margin-bottom: var(--space-16);
+}
+
+.print__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-8);
+  padding: var(--space-8);
+  background: var(--color-ink);
+  color: var(--color-paper);
+  border-radius: var(--radius);
+}
+
+.print__cover {
+  flex: 0 0 auto;
+  width: clamp(8rem, 30vw, 14rem);
+  box-shadow: 0 12px 30px rgb(0 0 0 / 0.45);
+  transform: rotate(-2deg);
+}
+
+.print__cover img {
+  border-radius: 3px;
+}
+
+.print__body {
+  flex: 1 1 16rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.print__kicker {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-brand);
+}
+
+.print__title {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.print__date {
+  color: rgb(255 255 255 / 0.7);
+}
+
+.print__cta {
+  align-self: flex-start;
+  margin-top: var(--space-3);
+  padding: var(--space-3) var(--space-6);
+  font-weight: 600;
+  color: var(--color-ink);
+  background: var(--color-brand);
+  border-radius: var(--radius);
+}
+
+.print__cta:hover {
+  background: #8ed35c;
+}
