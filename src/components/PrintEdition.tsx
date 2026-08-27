@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { usePrintEditions } from '../hooks/useWp';
+import { PRINT_COUNT, usePrintEditions } from '../hooks/useWp';
 import type { PrintEdition as Edition } from '../lib/types';
 import { formatDate } from '../lib/format';
 import './PrintEdition.css';
@@ -11,8 +11,12 @@ const ARCHIVE_URL = 'https://presenciapr.com/impreso/';
  * the ten previous issues sit in a snap-scrolling strip with prev/next controls.
  * Hidden entirely on error/empty — it's a bonus, not a dependency.
  */
-export function PrintEdition({ compact = false }: { compact?: boolean }) {
-  const { data } = usePrintEditions();
+/**
+ * `card`: current issue only, sized to sit in the hero's block row.
+ * Default: current issue + strip of previous editions.
+ */
+export function PrintEdition({ card = false }: { card?: boolean }) {
+  const { data } = usePrintEditions(card ? 1 : PRINT_COUNT);
   const strip = useRef<HTMLUListElement>(null);
   if (!data || data.length === 0) return null;
 
@@ -25,14 +29,14 @@ export function PrintEdition({ compact = false }: { compact?: boolean }) {
   };
 
   return (
-    <section className={`print ${compact ? 'print--compact' : ''}`} aria-labelledby="print-title">
+    <section className={`print ${card ? 'print--card' : ''}`} aria-labelledby="print-title">
       <div className="print__inner">
         <div className="print__current">
           <Cover edition={current} sizes="(min-width: 40rem) 16rem, 60vw" eager />
           <div className="print__body">
             <span className="print__kicker">
               <span className="print__pulse" aria-hidden="true" />
-              Edición impresa · esta semana
+              {card ? 'Edición impresa' : 'Edición impresa · esta semana'}
             </span>
             <h2 id="print-title" className="print__title">
               {current.title}
@@ -40,7 +44,7 @@ export function PrintEdition({ compact = false }: { compact?: boolean }) {
             <p className="print__date">
               <time dateTime={current.publishedAt}>{formatDate(current.publishedAt)}</time>
             </p>
-            {!compact ? (
+            {!card ? (
               <p className="print__blurb">
                 La edición semanal completa, tal como llega a los hogares del Noreste, gratis y en formato digital.
               </p>
@@ -50,13 +54,13 @@ export function PrintEdition({ compact = false }: { compact?: boolean }) {
                 Leer la edición digital
               </a>
               <a className="print__archive" href={ARCHIVE_URL} target="_blank" rel="noopener noreferrer">
-                Archivo de ediciones <span aria-hidden="true">→</span>
+                {card ? 'Archivo' : 'Archivo de ediciones'} <span aria-hidden="true">→</span>
               </a>
             </div>
           </div>
         </div>
 
-        {previous.length > 0 ? (
+        {!card && previous.length > 0 ? (
           <div className="print__previous">
             <div className="print__previous-head">
               <p className="print__previous-title">Ediciones anteriores</p>

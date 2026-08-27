@@ -27,6 +27,14 @@ describe('<PrintEdition />', () => {
   });
 });
 
+describe('<PrintEdition card />', () => {
+  it('shows only the current issue', async () => {
+    renderWithQuery(<PrintEdition card />);
+    expect(await screen.findByRole('heading', { name: 'Edición 700' })).toBeInTheDocument();
+    expect(screen.queryByRole('list', { name: 'Ediciones anteriores' })).not.toBeInTheDocument();
+  });
+});
+
 describe('<FloatingIssue />', () => {
   it('links to the latest issue and can be dismissed for the session', async () => {
     sessionStorage.clear();

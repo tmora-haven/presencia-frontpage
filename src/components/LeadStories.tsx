@@ -3,6 +3,7 @@ import { AdSlot } from './AdSlot';
 import { ArticleCard } from './ArticleCard';
 import { FeaturedSlideshow } from './FeaturedSlideshow';
 import { Kicker } from './Kicker';
+import { FemeninaSpotlight } from './FemeninaSpotlight';
 import { PrintEdition } from './PrintEdition';
 import { SectionBoundary } from './SectionBoundary';
 import { SectionHeading } from './SectionHeading';
@@ -57,9 +58,14 @@ export function LeadStories() {
       <section className="hero" aria-labelledby="hero-title">
         <div className="hero__main-col">
           {slides ? <FeaturedSlideshow articles={slides} /> : <div className="hero__main" aria-busy="true"><Skeleton variant="hero" /></div>}
-          <SectionBoundary>
-            <PrintEdition compact />
-          </SectionBoundary>
+          <div className="hero__blocks">
+            <SectionBoundary>
+              <PrintEdition card />
+            </SectionBoundary>
+            <SectionBoundary>
+              <FemeninaSpotlight />
+            </SectionBoundary>
+          </div>
         </div>
 
         {side.length > 0 ? (

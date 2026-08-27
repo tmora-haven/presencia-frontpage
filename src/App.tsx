@@ -1,7 +1,8 @@
-import { useFeatured, useLatest } from './hooks/useWp';
+import { useCategoryFeed, useFeatured, useLatest } from './hooks/useWp';
 import { AdSlot } from './components/AdSlot';
 import { CategoryRail } from './components/CategoryRail';
 import { FemeninaSection } from './components/FemeninaSection';
+import { FEMENINA_SLUG } from './components/FemeninaSpotlight';
 import { FloatingIssue } from './components/FloatingIssue';
 import { Footer } from './components/Footer';
 import { LeadStories } from './components/LeadStories';
@@ -21,6 +22,10 @@ export default function App() {
     settled(latest) && settled(featured)
       ? [...(latest.data ?? []), ...(featured.data ?? [])].map((a) => a.id)
       : undefined;
+  // Same query the hero spotlight uses (shared cache) so the Femenina section skips that story.
+  const spotlight = useCategoryFeed(FEMENINA_SLUG, 1, []);
+  const femeninaExclude =
+    exclude && settled(spotlight) ? [...exclude, ...(spotlight.data?.articles ?? []).map((a) => a.id)] : undefined;
 
   return (
     <>
@@ -39,7 +44,7 @@ export default function App() {
         </SectionBoundary>
 
         <SectionBoundary>
-          <FemeninaSection exclude={exclude} />
+          <FemeninaSection exclude={femeninaExclude} />
         </SectionBoundary>
 
         <AdSlot size="leaderboard" slot="portada-femenina" className="ad-row" />

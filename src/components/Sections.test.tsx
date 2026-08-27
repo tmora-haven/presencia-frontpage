@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest';
 import { API, server } from '../test/server';
 import { renderWithQuery } from '../test/render';
 import { FemeninaSection } from './FemeninaSection';
+import { FemeninaSpotlight } from './FemeninaSpotlight';
 import { PalabraSection } from './PalabraSection';
 
 describe('<FemeninaSection />', () => {
@@ -17,6 +18,14 @@ describe('<FemeninaSection />', () => {
       'href',
       'https://presenciapr.com/presencia-femenina/',
     );
+  });
+});
+
+describe('<FemeninaSpotlight />', () => {
+  it('renders the latest Femenina story with brand link', async () => {
+    renderWithQuery(<FemeninaSpotlight />);
+    expect(await screen.findByRole('heading', { level: 2 })).toHaveTextContent('Titular 1 – prueba');
+    expect(screen.getByRole('link', { name: /Femenina/ })).toHaveAttribute('href', 'https://presenciapr.com/presencia-femenina/');
   });
 });
 

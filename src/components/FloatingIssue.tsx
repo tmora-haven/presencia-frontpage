@@ -19,7 +19,7 @@ function readDismissed(): string | null {
  * id, so a new edition brings it back.
  */
 export function FloatingIssue({ watch = '.print' }: { watch?: string }) {
-  const { data } = usePrintEditions();
+  const { data } = usePrintEditions(1); // shares the card's single-issue query
   const latest = data?.[0];
   const [dismissed, setDismissed] = useState<string | null>(() => readDismissed());
   const [sectionVisible, setSectionVisible] = useState(false);

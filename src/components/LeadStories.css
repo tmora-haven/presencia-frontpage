@@ -9,13 +9,39 @@
 @media (min-width: 64rem) {
   .hero {
     grid-template-columns: 2fr 1fr;
-    align-items: start; /* never stretch the slideshow to the side column's height */
+    align-items: stretch;
     gap: var(--space-10, 2.5rem);
   }
 }
 
+/* Slideshow keeps its natural height; the block row grows to meet the side column. */
 .hero__main-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
   min-width: 0;
+}
+
+.hero__blocks {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+
+@media (min-width: 40rem) {
+  .hero__blocks {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.hero__blocks > * {
+  display: flex;
+  min-width: 0;
+}
+
+.hero__blocks > * > * {
+  flex: 1;
 }
 
 .hero__main {
