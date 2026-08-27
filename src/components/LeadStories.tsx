@@ -68,6 +68,7 @@ export function LeadStories() {
                 </li>
               ))}
             </ol>
+            <AdSlot size="rectangle" slot="portada-lateral" className="hero__side-ad" />
           </aside>
         ) : null}
       </section>

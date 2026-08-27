@@ -159,10 +159,17 @@
   scroll-snap-align: start;
 }
 
+.scroll__item--ad {
+  display: flex;
+  flex-basis: auto;
+  align-items: flex-start;
+  justify-content: center;
+}
+
 @media (min-width: 64rem) {
   .scroll {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, 1fr) auto;
     gap: var(--space-6);
     margin-inline: 0;
     padding-inline: 0;

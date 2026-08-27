@@ -17,7 +17,7 @@ la fuente de verdad y esta aplicación lo consume como un *headless CMS*.
 | Consultas dependientes (las secciones excluyen las noticias ya mostradas) | `App.tsx` → `CategoryRail` |
 | Custom post types (`impreso`) y taxonomías personalizadas (`pueblo` junto a la categoría) | `PrintEdition.tsx`, `Kicker.tsx` |
 | Menú derivado de la API (las categorías más usadas) con *drawer* móvil accesible | `NavBar.tsx` |
-| Espacios publicitarios etiquetados, con tamaño reservado (sin *layout shift*) | `AdSlot.tsx` |
+| 8 espacios publicitarios etiquetados con tamaños IAB exactos por breakpoint (sin *layout shift*) | `AdSlot.tsx` |
 | Tres presentaciones de sección con un solo hook: destacada, opinión, carrusel | `CategoryRail.tsx` |
 | Slideshow accesible de «noticias destacadas» (etiqueta), con autoplay respetuoso | `FeaturedSlideshow.tsx` |
 | Sub-marca **Presencia Femenina** con su propia identidad y chips de subcategorías | `FemeninaSection.tsx` |
@@ -66,9 +66,12 @@ src/components/*         ← presentación pura; reciben datos ya seguros
   periódico y se mantienen solas.
 - **Publicidad honesta.** Cada `AdSlot` lleva la etiqueta visible «Publicidad»,
   un `aria-label` equivalente y un `data-ad-slot` estable para el servidor de
-  anuncios. Reserva el tamaño estándar (970×90, 970×250, 300×250, 300×600 en
-  escritorio; 320×100 / 300×250 en móvil) para que cargar una creatividad no
-  mueva el contenido.
+  anuncios. Cada bloque mide exactamente el formato IAB de su breakpoint
+  (escritorio 970×90 · 970×250 · 300×250 · 300×600; tableta 728×90 · 300×250;
+  móvil 320×100 · 300×250) para que cargar una creatividad no mueva el
+  contenido. Posiciones: `portada-top`, `portada-lateral`, `portada-bento`,
+  `portada-femenina`, `rail-deportes`, `portada-mid`, `rail-salud`,
+  `portada-bottom`.
 - **CSS propio con tokens.** Sin frameworks de utilidades; `src/styles/tokens.css`
   define marca, tipografía y espaciado. El bundle completo pesa ~74 kB gzip.
 
@@ -87,7 +90,7 @@ npm run build             # producción en dist/ (desplegable en cualquier hosti
 npm run preview           # sirve dist/
 npm run typecheck         # TypeScript estricto
 npm run lint              # oxlint
-npm test                  # Vitest + Testing Library + MSW (36 pruebas)
+npm test                  # Vitest + Testing Library + MSW (37 pruebas)
 npm run e2e               # Playwright: smoke test estructural contra el sitio en vivo
 ```
 

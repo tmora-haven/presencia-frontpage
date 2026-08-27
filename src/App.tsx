@@ -43,6 +43,8 @@ export default function App() {
           <FemeninaSection exclude={exclude} />
         </SectionBoundary>
 
+        <AdSlot size="leaderboard" slot="portada-femenina" className="ad-row" />
+
         <SectionBoundary>
           <CategoryRail slug="deportes" label="Deportes" variant="feature" exclude={exclude} />
         </SectionBoundary>
@@ -70,6 +72,8 @@ export default function App() {
         <SectionBoundary>
           <CategoryRail slug="salud" label="A tu salud" variant="scroll" exclude={exclude} />
         </SectionBoundary>
+
+        <AdSlot size="billboard" slot="portada-bottom" className="ad-row" />
       </main>
       <Footer />
       <FloatingIssue />

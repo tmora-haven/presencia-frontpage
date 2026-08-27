@@ -18,7 +18,8 @@ describe('<LeadStories />', () => {
     const latest = screen.getByRole('region', { name: 'Últimas noticias' });
     expect(within(latest).getAllByRole('article')).toHaveLength(8);
     expect(within(latest).getByRole('complementary', { name: 'Publicidad' })).toBeInTheDocument();
-    expect(screen.getByRole('complementary', { name: 'Lo más reciente' })).toBeInTheDocument();
+    const side = screen.getByRole('complementary', { name: 'Lo más reciente' });
+    expect(within(side).getByRole('complementary', { name: 'Publicidad' })).toHaveAttribute('data-ad-slot', 'portada-lateral');
   });
 
   it('falls back to the latest story when the featured tag is empty', async () => {

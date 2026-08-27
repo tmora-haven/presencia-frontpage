@@ -23,6 +23,10 @@
   flex-direction: column;
 }
 
+.hero__side-ad {
+  margin-top: var(--space-6);
+}
+
 .hero__side-title {
   padding-bottom: var(--space-3);
   font-size: var(--text-xs);
@@ -88,7 +92,14 @@
 }
 
 .bento__ad {
+  grid-column: 1 / -1; /* a 300px creative can't share a row on phones */
   align-self: center;
+}
+
+@media (min-width: 40rem) {
+  .bento__ad {
+    grid-column: auto;
+  }
 }
 
 @media (min-width: 64rem) {

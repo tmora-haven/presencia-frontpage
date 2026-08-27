@@ -63,7 +63,7 @@ export function CategoryRail({ slug, label, variant = 'feature', count, exclude,
         <SectionHeading id={headingId} title={data.category.name} href={href} />
         {variant === 'feature' && <FeatureLayout articles={data.articles} slug={slug} />}
         {variant === 'opinion' && <OpinionLayout articles={data.articles} />}
-        {variant === 'scroll' && <ScrollLayout articles={data.articles} />}
+        {variant === 'scroll' && <ScrollLayout articles={data.articles} slug={slug} />}
       </div>
     </section>
   );
@@ -122,7 +122,7 @@ function OpinionLayout({ articles }: { articles: Article[] }) {
   );
 }
 
-function ScrollLayout({ articles }: { articles: Article[] }) {
+function ScrollLayout({ articles, slug }: { articles: Article[]; slug: string }) {
   return (
     <div className="scroll" tabIndex={0}>
       {articles.map((a) => (
@@ -130,6 +130,9 @@ function ScrollLayout({ articles }: { articles: Article[] }) {
           <ArticleCard article={a} imageSizes="(min-width: 64rem) 25vw, 70vw" />
         </div>
       ))}
+      <div className="scroll__item scroll__item--ad">
+        <AdSlot size="rectangle" slot={`rail-${slug}`} />
+      </div>
     </div>
   );
 }
