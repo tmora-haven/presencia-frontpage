@@ -112,6 +112,35 @@ npm run e2e               # Playwright: smoke + responsividad (13 pruebas) contr
   desplazarse lateralmente — con la red de seguridad `overflow-x: clip`
   desactivada, para validar el layout real.
 
+## Despliegue (Coolify / Docker)
+
+El repositorio incluye un `Dockerfile` multi-etapa (Node 22 → nginx) listo para
+Coolify. En Coolify: *New Resource → Application → Public Repository*, rama
+`main`, build pack **Dockerfile**. Sin variables obligatorias: por defecto apunta
+a `https://presenciapr.com`. Para otro WordPress, define
+`VITE_WP_API_URL` como variable de **build** (se compila dentro del bundle y se
+usa también para la cabecera CSP).
+
+Lo que hace la imagen:
+
+- `nginx` sirve `dist/` con *fallback* a `index.html` (SPA).
+- Cabeceras de seguridad: `Content-Security-Policy` restringida al origen de
+  WordPress y Google Fonts, `X-Content-Type-Options`, `X-Frame-Options`,
+  `Referrer-Policy`, `Permissions-Policy`.
+- `/assets/*` con caché inmutable de un año (Vite les pone *hash*);
+  `index.html` siempre revalidado.
+- `GET /healthz` → `200 ok` para el *health check* (también declarado en el
+  `Dockerfile`).
+
+Alternativa sin Docker: `nixpacks.toml` (build pack **Nixpacks**) construye y
+sirve `dist/` con `serve` en el puerto 3000. Esta vía **no** añade las cabeceras
+de seguridad; se recomienda el `Dockerfile`.
+
+```bash
+docker build -t presencia-frontpage .
+docker run --rm -p 8080:80 presencia-frontpage   # http://localhost:8080
+```
+
 ## Requisitos del lado WordPress
 
 Solo endpoints públicos de lectura: `/wp-json/`, `wp/v2/posts`,
