@@ -10,6 +10,12 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
+/* The page must never scroll sideways. `clip` (not `hidden`) keeps sticky/fixed elements working. */
+html,
+body {
+  overflow-x: clip;
+}
+
 body {
   margin: 0;
   font-family: var(--font-sans);
@@ -42,6 +48,13 @@ h2,
 h3,
 p {
   margin: 0;
+  overflow-wrap: anywhere;
+}
+
+img,
+video,
+iframe {
+  max-width: 100%;
 }
 
 .container {

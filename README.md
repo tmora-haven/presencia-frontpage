@@ -93,7 +93,7 @@ npm run preview           # sirve dist/
 npm run typecheck         # TypeScript estricto
 npm run lint              # oxlint
 npm test                  # Vitest + Testing Library + MSW (42 pruebas)
-npm run e2e               # Playwright: smoke test estructural contra el sitio en vivo
+npm run e2e               # Playwright: smoke + responsividad (13 pruebas) contra el sitio en vivo
 ```
 
 ## Pruebas
@@ -103,10 +103,14 @@ npm run e2e               # Playwright: smoke test estructural contra el sitio e
 - **Integración** — componentes contra una API simulada con MSW: skeleton →
   datos, error → reintento exitoso, vacío → no se renderiza, HTML malicioso →
   texto inerte.
-- **E2E** — un único smoke test que verifica la *estructura* de la portada
+- **E2E** — un smoke test que verifica la *estructura* de la portada
   (cabecera, titular principal, al menos una sección, pie) sin depender de
-  titulares concretos, para que las noticias del día no lo hagan frágil. También
-  comprueba que todo enlace externo lleve `rel="noopener"`.
+  titulares concretos, para que las noticias del día no lo hagan frágil; también
+  comprueba que todo enlace externo lleve `rel="noopener"`. Y una prueba de
+  **responsividad** en 12 anchos (320 → 1920 px, con el menú móvil abierto) que
+  falla si cualquier elemento sobresale del viewport o la página puede
+  desplazarse lateralmente — con la red de seguridad `overflow-x: clip`
+  desactivada, para validar el layout real.
 
 ## Requisitos del lado WordPress
 
