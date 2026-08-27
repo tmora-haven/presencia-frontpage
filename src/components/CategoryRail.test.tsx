@@ -16,6 +16,12 @@ describe('<CategoryRail />', () => {
     expect(screen.getByRole('link', { name: /ver todo/i })).toHaveAttribute('href', 'https://presenciapr.com/category/deportes/');
   });
 
+  it('opinion variant shows a featured image per article', async () => {
+    renderWithQuery(<CategoryRail slug="deportes" label="Deportes" variant="opinion" exclude={[]} />);
+    await screen.findByRole('link', { name: 'Titular 1 – prueba' });
+    expect(document.querySelectorAll('.opinion__media img')).toHaveLength(4);
+  });
+
   it('renders nothing for a category that does not exist', async () => {
     const { container } = renderWithQuery(<CategoryRail slug="nada" label="Nada" exclude={[]} />);
     await waitFor(() => expect(container).toBeEmptyDOMElement());

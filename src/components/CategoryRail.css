@@ -76,13 +76,39 @@
   gap: var(--space-3);
 }
 
+.opinion__media {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: var(--radius);
+}
+
+.opinion__media img,
+.opinion__placeholder {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.opinion__item:hover .opinion__media img {
+  transform: scale(1.03);
+}
+
+.opinion__placeholder {
+  background: var(--color-paper) url('/brand/favicon.png') center / 3.5rem no-repeat;
+}
+
 .opinion__quote {
-  height: 1.5rem;
+  position: absolute;
+  left: var(--space-3);
+  bottom: -0.35em;
   font-family: Georgia, 'Times New Roman', serif;
-  font-size: 4.5rem;
+  font-size: 5rem;
   font-weight: 700;
   line-height: 1;
   color: var(--color-brand);
+  text-shadow: 0 2px 8px rgb(0 0 0 / 0.35);
 }
 
 .opinion__title {

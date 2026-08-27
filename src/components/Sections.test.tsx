@@ -27,6 +27,8 @@ describe('<PalabraSection />', () => {
     expect(screen.getByRole('heading', { level: 3 })).toHaveTextContent('Titular 1');
     expect(screen.getByText('Reflexiones anteriores')).toBeInTheDocument();
     expect(screen.getAllByRole('listitem')).toHaveLength(2);
+    // lead + two previous reflections each carry their featured image
+    expect(document.querySelectorAll('.palabra__lead-media img, .palabra__list-thumb img')).toHaveLength(3);
   });
 
   it('renders nothing when the column has no posts', async () => {

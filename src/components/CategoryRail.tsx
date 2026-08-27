@@ -89,9 +89,25 @@ function OpinionLayout({ articles }: { articles: Article[] }) {
     <div className="opinion">
       {articles.map((a) => (
         <article key={a.id} className="opinion__item">
-          <span className="opinion__quote" aria-hidden="true">
-            “
-          </span>
+          <a className="opinion__media" href={a.url} target="_blank" rel="noopener noreferrer" tabIndex={-1} aria-hidden="true">
+            {a.image ? (
+              <img
+                src={a.image.src}
+                srcSet={a.image.srcSet}
+                sizes="(min-width: 64rem) 22vw, (min-width: 40rem) 45vw, 100vw"
+                width={a.image.width || undefined}
+                height={a.image.height || undefined}
+                alt=""
+                loading="lazy"
+                decoding="async"
+              />
+            ) : (
+              <div className="opinion__placeholder" />
+            )}
+            <span className="opinion__quote" aria-hidden="true">
+              “
+            </span>
+          </a>
           <h3 className="opinion__title">
             <a className="headline-link" href={a.url} target="_blank" rel="noopener noreferrer">
               {a.title}

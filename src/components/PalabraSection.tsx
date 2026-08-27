@@ -1,5 +1,5 @@
 import { useCategoryFeed } from '../hooks/useWp';
-import type { Article } from '../lib/types';
+import type { Article, ArticleImage } from '../lib/types';
 import { SectionError, Skeleton } from './SectionState';
 import './PalabraSection.css';
 
@@ -8,6 +8,27 @@ const COUNT = 3;
 
 const dayBadge = new Intl.DateTimeFormat('es-PR', { day: 'numeric', timeZone: 'America/Puerto_Rico' });
 const monthBadge = new Intl.DateTimeFormat('es-PR', { month: 'short', timeZone: 'America/Puerto_Rico' });
+
+function Thumb({ image, url, sizes, className }: { image: ArticleImage | null; url: string; sizes: string; className: string }) {
+  return (
+    <a className={className} href={url} target="_blank" rel="noopener noreferrer" tabIndex={-1} aria-hidden="true">
+      {image ? (
+        <img
+          src={image.src}
+          srcSet={image.srcSet}
+          sizes={sizes}
+          width={image.width || undefined}
+          height={image.height || undefined}
+          alt=""
+          loading="lazy"
+          decoding="async"
+        />
+      ) : (
+        <span className="palabra__placeholder">✦</span>
+      )}
+    </a>
+  );
+}
 
 function DateBadge({ iso }: { iso: string }) {
   const d = new Date(iso);
@@ -67,8 +88,9 @@ export function PalabraSection({ exclude }: { exclude: number[] | undefined }) {
               {previous.map((a) => (
                 <li key={a.id}>
                   <a href={a.url} target="_blank" rel="noopener noreferrer">
-                    <DateBadge iso={a.publishedAt} />
+                    <Thumb image={a.image} url={a.url} sizes="6rem" className="palabra__list-thumb" />
                     <span className="palabra__list-text">
+                      <DateBadge iso={a.publishedAt} />
                       <span className="palabra__list-headline">{a.title}</span>
                       {a.author ? <span className="palabra__list-author">{a.author}</span> : null}
                     </span>
@@ -90,12 +112,17 @@ export function PalabraSection({ exclude }: { exclude: number[] | undefined }) {
 function Lead({ article }: { article: Article }) {
   return (
     <article className="palabra__lead">
-      <DateBadge iso={article.publishedAt} />
+      <Thumb image={article.image} url={article.url} sizes="(min-width: 64rem) 30vw, 100vw" className="palabra__lead-media" />
       <div className="palabra__lead-body">
+        <DateBadge iso={article.publishedAt} />
         <h3 className="palabra__lead-title">
           <a href={article.url} target="_blank" rel="noopener noreferrer">{article.title}</a>
         </h3>
-        {article.excerpt ? <p className="palabra__quote">{article.excerpt}</p> : null}
+        {article.excerpt ? (
+          <div className="palabra__quote-wrap">
+            <p className="palabra__quote">{article.excerpt}</p>
+          </div>
+        ) : null}
         <p className="palabra__meta">
           {article.author ? <span className="palabra__author">{article.author}</span> : null}
           <a href={article.url} target="_blank" rel="noopener noreferrer" className="palabra__read">
