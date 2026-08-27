@@ -53,6 +53,19 @@ describe('getCategoryFeed', () => {
     await expect(getCategoryFeed('no-existe', 4)).resolves.toBeNull();
   });
 
+  it('can exclude an overlapping category', async () => {
+    let captured: URL | null = null;
+    server.use(
+      http.get(`${API}/wp/v2/posts`, ({ request }) => {
+        captured = new URL(request.url);
+        return HttpResponse.json([]);
+      }),
+    );
+    await getCategoryFeed('deportes', 4, [], undefined, 'la-palabra-del-dia');
+    expect(captured!.searchParams.get('categories')).toBe('22');
+    expect(captured!.searchParams.get('categories_exclude')).toBe('31');
+  });
+
   it('passes exclusions through to the posts query', async () => {
     const feed = await getCategoryFeed('deportes', 4, [1, 2]);
     expect(feed?.category).toEqual({ id: 22, name: 'Deportes', slug: 'deportes' });

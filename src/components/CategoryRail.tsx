@@ -16,6 +16,8 @@ interface Props {
   variant?: RailVariant;
   count?: number;
   exclude: number[] | undefined;
+  /** Leave out posts that also belong to this category (avoids cross-section duplicates). */
+  excludeCategorySlug?: string;
 }
 
 const CATEGORY_BASE = 'https://presenciapr.com/category/';
@@ -26,8 +28,8 @@ const CATEGORY_BASE = 'https://presenciapr.com/category/';
  *  - opinion: text-first, tinted band with oversized quote marks (for Editorial)
  *  - scroll:  horizontal snap-scroll cards on small screens, 4-up on desktop
  */
-export function CategoryRail({ slug, label, variant = 'feature', count, exclude }: Props) {
-  const { data, isPending, isError, error, refetch, isFetching } = useCategoryFeed(slug, count, exclude);
+export function CategoryRail({ slug, label, variant = 'feature', count, exclude, excludeCategorySlug }: Props) {
+  const { data, isPending, isError, error, refetch, isFetching } = useCategoryFeed(slug, count, exclude, excludeCategorySlug);
   const headingId = `rail-${slug}`;
   const className = `rail rail--${variant}`;
 

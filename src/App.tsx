@@ -1,10 +1,12 @@
-import { useLatest } from './hooks/useWp';
+import { useFeatured, useLatest } from './hooks/useWp';
 import { AdSlot } from './components/AdSlot';
 import { CategoryRail } from './components/CategoryRail';
+import { FemeninaSection } from './components/FemeninaSection';
 import { Footer } from './components/Footer';
 import { LeadStories } from './components/LeadStories';
 import { Masthead } from './components/Masthead';
 import { NavBar } from './components/NavBar';
+import { PalabraSection } from './components/PalabraSection';
 import { PrintEdition } from './components/PrintEdition';
 import { SectionBoundary } from './components/SectionBoundary';
 import { Ticker } from './components/Ticker';
@@ -13,7 +15,12 @@ export default function App() {
   // Rails exclude stories already shown in the lead section. While the lead
   // query is pending, `exclude` is undefined and the rails wait (dependent query).
   const latest = useLatest();
-  const exclude = latest.data ? latest.data.map((a) => a.id) : latest.isError ? [] : undefined;
+  const featured = useFeatured();
+  const settled = (q: { data?: unknown; isError: boolean }) => q.data !== undefined || q.isError;
+  const exclude =
+    settled(latest) && settled(featured)
+      ? [...(latest.data ?? []), ...(featured.data ?? [])].map((a) => a.id)
+      : undefined;
 
   return (
     <>
@@ -32,6 +39,10 @@ export default function App() {
         </SectionBoundary>
 
         <SectionBoundary>
+          <FemeninaSection exclude={exclude} />
+        </SectionBoundary>
+
+        <SectionBoundary>
           <CategoryRail slug="deportes" label="Deportes" variant="feature" exclude={exclude} />
         </SectionBoundary>
 
@@ -40,7 +51,17 @@ export default function App() {
         </SectionBoundary>
 
         <SectionBoundary>
-          <CategoryRail slug="editorial" label="Editorial" variant="opinion" exclude={exclude} />
+          <CategoryRail
+            slug="editorial"
+            label="Editorial"
+            variant="opinion"
+            exclude={exclude}
+            excludeCategorySlug="la-palabra-del-dia"
+          />
+        </SectionBoundary>
+
+        <SectionBoundary>
+          <PalabraSection exclude={exclude} />
         </SectionBoundary>
 
         <AdSlot size="billboard" slot="portada-mid" className="ad-row" />

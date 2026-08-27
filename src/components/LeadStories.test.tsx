@@ -13,11 +13,19 @@ describe('<LeadStories />', () => {
     expect(screen.getByLabelText('Cargando portada')).toBeInTheDocument();
 
     const hero = await screen.findByRole('heading', { level: 1 });
-    expect(hero).toHaveTextContent('Titular 1 – prueba');
+    expect(hero).toHaveTextContent('Titular 101 – prueba'); // from the "destacadas" tag query
+    expect(screen.getByRole('region', { name: 'Noticias destacadas' })).toBeInTheDocument();
     const latest = screen.getByRole('region', { name: 'Últimas noticias' });
     expect(within(latest).getAllByRole('article')).toHaveLength(8);
     expect(within(latest).getByRole('complementary', { name: 'Publicidad' })).toBeInTheDocument();
     expect(screen.getByRole('complementary', { name: 'Lo más reciente' })).toBeInTheDocument();
+  });
+
+  it('falls back to the latest story when the featured tag is empty', async () => {
+    server.use(http.get(`${API}/wp/v2/tags`, () => HttpResponse.json([])));
+    renderWithQuery(<LeadStories />);
+    expect(await screen.findByRole('heading', { level: 1 })).toHaveTextContent('Titular 1 – prueba');
+    expect(screen.queryByRole('button', { name: 'Siguiente' })).not.toBeInTheDocument();
   });
 
   it('renders API HTML as inert text (no injected elements)', async () => {

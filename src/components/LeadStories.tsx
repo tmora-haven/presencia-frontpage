@@ -1,7 +1,7 @@
-import { useLatest } from '../hooks/useWp';
-import { formatDate, formatTime } from '../lib/format';
+import { useFeatured, useLatest } from '../hooks/useWp';
 import { AdSlot } from './AdSlot';
 import { ArticleCard } from './ArticleCard';
+import { FeaturedSlideshow } from './FeaturedSlideshow';
 import { SectionHeading } from './SectionHeading';
 import { SectionError, Skeleton } from './SectionState';
 import './LeadStories.css';
@@ -10,11 +10,14 @@ const HERO_SIDE = 4; // numbered "Lo más reciente" list next to the hero
 const BENTO_AD_INDEX = 2; // where the rectangle ad sits inside the bento grid
 
 /**
- * Hero (latest story, headline over image) + numbered side list + bento grid.
- * Everything here consumes one query, so TanStack Query issues one request.
+ * Featured slideshow (tag "noticias destacadas") + numbered "Lo más reciente"
+ * list + bento grid of the latest news. The slideshow has its own query; if
+ * the tag is empty or fails, the latest story is promoted to a single slide so
+ * the frontpage never loses its lead.
  */
 export function LeadStories() {
   const { data, isPending, isError, error, refetch, isFetching } = useLatest();
+  const featured = useFeatured();
 
   if (isPending) {
     return (
@@ -40,47 +43,16 @@ export function LeadStories() {
     );
   }
 
-  const [hero, ...rest] = data;
-  if (!hero) return null;
-  const side = rest.slice(0, HERO_SIDE);
-  const bento = rest;
+  if (data.length === 0) return null;
+  const side = data.slice(0, HERO_SIDE);
+  const bento = data.slice(HERO_SIDE);
+  // Featured still loading → hold the slot with a skeleton; failed/empty → promote the latest story.
+  const slides = featured.data && featured.data.length > 0 ? featured.data : featured.isPending ? null : data.slice(0, 1);
 
   return (
     <>
       <section className="hero" aria-labelledby="hero-title">
-        <article className="hero__main">
-          <a className="hero__media" href={hero.url} target="_blank" rel="noopener noreferrer" tabIndex={-1} aria-hidden="true">
-            {hero.image ? (
-              <img
-                src={hero.image.src}
-                srcSet={hero.image.srcSet}
-                sizes="(min-width: 64rem) 66vw, 100vw"
-                width={hero.image.width || undefined}
-                height={hero.image.height || undefined}
-                alt=""
-                fetchPriority="high"
-                decoding="async"
-              />
-            ) : (
-              <div className="hero__placeholder" />
-            )}
-          </a>
-          <div className="hero__body">
-            {hero.category ? <span className="hero__kicker">{hero.category.name}</span> : null}
-            <h1 id="hero-title" className="hero__title">
-              <a href={hero.url} target="_blank" rel="noopener noreferrer">
-                {hero.title}
-              </a>
-            </h1>
-            {hero.excerpt ? <p className="hero__excerpt">{hero.excerpt}</p> : null}
-            <p className="hero__meta">
-              {hero.author ? <span>{hero.author} · </span> : null}
-              <time dateTime={hero.publishedAt}>
-                {formatDate(hero.publishedAt)}, {formatTime(hero.publishedAt)}
-              </time>
-            </p>
-          </div>
-        </article>
+        {slides ? <FeaturedSlideshow articles={slides} /> : <div className="hero__main" aria-busy="true"><Skeleton variant="hero" /></div>}
 
         {side.length > 0 ? (
           <aside className="hero__side" aria-label="Lo más reciente">

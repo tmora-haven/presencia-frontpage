@@ -156,11 +156,17 @@ export async function getCategoryFeed(
   count: number,
   exclude: number[] = [],
   signal?: AbortSignal,
+  /** Posts also filed under this category are left out (e.g. a column that overlaps Editorial). */
+  excludeCategorySlug?: string,
 ): Promise<CategoryFeed | null> {
-  const category = await getCategoryBySlug(slug, signal);
+  const [category, excludedCategory] = await Promise.all([
+    getCategoryBySlug(slug, signal),
+    excludeCategorySlug ? getCategoryBySlug(excludeCategorySlug, signal) : Promise.resolve(null),
+  ]);
   if (!category) return null;
   const url = buildUrl('wp/v2/posts', {
     categories: category.id,
+    categories_exclude: excludedCategory?.id,
     per_page: count,
     exclude: exclude.length ? exclude.join(',') : undefined,
     _embed: 'wp:featuredmedia,author,wp:term',
@@ -171,6 +177,54 @@ export async function getCategoryFeed(
     category: { id: category.id, name: decodeHtml(category.name), slug: category.slug },
     articles: posts.map(normalizePost),
   };
+}
+
+export interface WpTag {
+  id: number;
+  name: string;
+  slug: string;
+  count: number;
+}
+
+export async function getTagBySlug(slug: string, signal?: AbortSignal): Promise<WpTag | null> {
+  const url = buildUrl('wp/v2/tags', { slug, _fields: 'id,name,slug,count' });
+  const [tag] = await getJson<WpTag[]>(url, signal);
+  return tag ?? null;
+}
+
+/** Most recent posts carrying a tag (e.g. the newsroom's "noticias destacadas"). */
+export async function getTagFeed(slug: string, count: number, signal?: AbortSignal): Promise<Article[]> {
+  const tag = await getTagBySlug(slug, signal);
+  if (!tag) return [];
+  const url = buildUrl('wp/v2/posts', {
+    tags: tag.id,
+    per_page: count,
+    _embed: 'wp:featuredmedia,author,wp:term',
+    _fields: POST_FIELDS,
+  });
+  const posts = await getJson<WpPost[]>(url, signal);
+  return posts.map(normalizePost);
+}
+
+export interface ChildCategory {
+  id: number;
+  name: string;
+  slug: string;
+  url: string;
+}
+
+/** Direct sub-categories of a category, most-used first (section chips). */
+export async function getChildCategories(parentId: number, count: number, signal?: AbortSignal): Promise<ChildCategory[]> {
+  const url = buildUrl('wp/v2/categories', {
+    parent: parentId,
+    per_page: count,
+    orderby: 'count',
+    order: 'desc',
+    hide_empty: 'true',
+    _fields: 'id,name,slug,link',
+  });
+  const cats = await getJson<(WpCategory & { link: string })[]>(url, signal);
+  return cats.map((c) => ({ id: c.id, name: decodeHtml(c.name), slug: c.slug, url: c.link }));
 }
 
 export interface NavCategory {

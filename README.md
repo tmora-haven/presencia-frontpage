@@ -19,6 +19,9 @@ la fuente de verdad y esta aplicación lo consume como un *headless CMS*.
 | Menú derivado de la API (las categorías más usadas) con *drawer* móvil accesible | `NavBar.tsx` |
 | Espacios publicitarios etiquetados, con tamaño reservado (sin *layout shift*) | `AdSlot.tsx` |
 | Tres presentaciones de sección con un solo hook: destacada, opinión, carrusel | `CategoryRail.tsx` |
+| Slideshow accesible de «noticias destacadas» (etiqueta), con autoplay respetuoso | `FeaturedSlideshow.tsx` |
+| Sub-marca **Presencia Femenina** con su propia identidad y chips de subcategorías | `FemeninaSection.tsx` |
+| Sección tipográfica para **La Palabra del Día** (columna sin imágenes) | `PalabraSection.tsx` |
 | Ticker «Último minuto» (pausa al pasar el cursor, estático con *reduced motion*) | `Ticker.tsx` |
 | Estados de carga (*skeletons*), error por sección con reintento y vacíos | `SectionState.tsx`, `SectionBoundary.tsx` |
 | Seguridad: ningún HTML de la API llega al DOM | `src/lib/decodeHtml.ts` + pruebas |
@@ -82,7 +85,7 @@ npm run build             # producción en dist/ (desplegable en cualquier hosti
 npm run preview           # sirve dist/
 npm run typecheck         # TypeScript estricto
 npm run lint              # oxlint
-npm test                  # Vitest + Testing Library + MSW (23 pruebas)
+npm test                  # Vitest + Testing Library + MSW (31 pruebas)
 npm run e2e               # Playwright: smoke test estructural contra el sitio en vivo
 ```
 
@@ -117,7 +120,8 @@ src/
     format.ts            fechas en es-PR
     types.ts             tipos de la API y del dominio
   hooks/useWp.ts         hooks de TanStack Query
-  components/            Masthead, NavBar, Ticker, AdSlot, LeadStories (héroe + bento),
+  components/            Masthead, NavBar, Ticker, AdSlot, LeadStories (slideshow + bento),
+                         FeaturedSlideshow, FemeninaSection, PalabraSection,
                          CategoryRail (feature | opinion | scroll), PrintEdition, Footer, …
   styles/                tokens.css, global.css
   test/                  MSW, fixtures, helpers

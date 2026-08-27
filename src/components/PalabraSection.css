@@ -1,0 +1,211 @@
+.palabra {
+  --palabra-paper: #fbf6ec;
+  --palabra-gold: #b8891f;
+  --palabra-serif: 'Roboto Slab', Georgia, 'Times New Roman', serif;
+
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-bottom: var(--space-16);
+  padding-block: var(--space-12);
+  background: var(--palabra-paper);
+  border-block: 1px solid #ead9b8;
+}
+
+.palabra__inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+}
+
+@media (min-width: 64rem) {
+  .palabra__inner {
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-areas:
+      'head lead previous'
+      'cta  lead previous';
+    align-items: start;
+  }
+
+  .palabra__head { grid-area: head; }
+  .palabra__lead { grid-area: lead; }
+  .palabra__previous { grid-area: previous; }
+  .palabra__cta { grid-area: cta; }
+}
+
+.palabra__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.palabra__ornament {
+  font-size: var(--text-2xl);
+  color: var(--palabra-gold);
+}
+
+.palabra__title {
+  font-family: var(--palabra-serif);
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.palabra__sub {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--palabra-gold);
+}
+
+.palabra__badge {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 0 0 auto;
+  min-width: 3.25rem;
+  padding: var(--space-2) var(--space-1);
+  line-height: 1;
+  color: var(--color-paper);
+  background: var(--color-ink);
+  border-radius: var(--radius);
+}
+
+.palabra__badge-day {
+  font-size: var(--text-xl);
+  font-weight: 700;
+}
+
+.palabra__badge-month {
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--palabra-gold);
+}
+
+.palabra__lead {
+  display: flex;
+  gap: var(--space-4);
+  padding: var(--space-6);
+  background: var(--color-paper);
+  border-left: 4px solid var(--palabra-gold);
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+
+.palabra__lead-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.palabra__lead-title {
+  font-family: var(--palabra-serif);
+  font-size: var(--text-xl);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.palabra__lead-title a:hover {
+  color: var(--palabra-gold);
+}
+
+.palabra__quote {
+  position: relative;
+  padding-left: var(--space-4);
+  font-family: var(--palabra-serif);
+  font-size: var(--text-base);
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--color-ink-soft);
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.palabra__quote::before {
+  content: '“';
+  position: absolute;
+  left: -0.15em;
+  top: -0.35em;
+  font-size: 2.5rem;
+  line-height: 1;
+  color: var(--palabra-gold);
+}
+
+.palabra__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-top: auto;
+  font-size: var(--text-sm);
+}
+
+.palabra__author {
+  font-weight: 700;
+}
+
+.palabra__read {
+  font-weight: 600;
+  color: var(--palabra-gold);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.palabra__previous-title {
+  padding-bottom: var(--space-2);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+  border-bottom: 1px solid #ead9b8;
+}
+
+.palabra__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.palabra__list li + li {
+  border-top: 1px solid #ead9b8;
+}
+
+.palabra__list a {
+  display: flex;
+  gap: var(--space-3);
+  padding-block: var(--space-4);
+}
+
+.palabra__list-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.palabra__list-headline {
+  font-family: var(--palabra-serif);
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.palabra__list a:hover .palabra__list-headline {
+  color: var(--palabra-gold);
+}
+
+.palabra__list-author {
+  font-size: var(--text-xs);
+  color: var(--color-ink-muted);
+}
+
+.palabra__cta {
+  justify-self: start;
+  font-weight: 700;
+  color: var(--color-ink);
+  border-bottom: 2px solid var(--palabra-gold);
+}
