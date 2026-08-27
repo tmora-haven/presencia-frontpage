@@ -1,4 +1,4 @@
-import { screen, waitFor } from '@testing-library/react';
+import { screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import { describe, expect, it } from 'vitest';
@@ -14,8 +14,10 @@ describe('<LeadStories />', () => {
 
     const hero = await screen.findByRole('heading', { level: 1 });
     expect(hero).toHaveTextContent('Titular 1 – prueba');
-    expect(screen.getByRole('heading', { name: 'Últimas noticias' })).toBeInTheDocument();
-    expect(screen.getAllByRole('article')).toHaveLength(8);
+    const latest = screen.getByRole('region', { name: 'Últimas noticias' });
+    expect(within(latest).getAllByRole('article')).toHaveLength(8);
+    expect(within(latest).getByRole('complementary', { name: 'Publicidad' })).toBeInTheDocument();
+    expect(screen.getByRole('complementary', { name: 'Lo más reciente' })).toBeInTheDocument();
   });
 
   it('renders API HTML as inert text (no injected elements)', async () => {

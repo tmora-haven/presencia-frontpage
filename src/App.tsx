@@ -1,17 +1,13 @@
 import { useLatest } from './hooks/useWp';
+import { AdSlot } from './components/AdSlot';
 import { CategoryRail } from './components/CategoryRail';
 import { Footer } from './components/Footer';
 import { LeadStories } from './components/LeadStories';
 import { Masthead } from './components/Masthead';
+import { NavBar } from './components/NavBar';
 import { PrintEdition } from './components/PrintEdition';
 import { SectionBoundary } from './components/SectionBoundary';
-
-/** Category rails, in page order. Slugs match presenciapr.com; labels are fallbacks while loading. */
-const RAILS = [
-  { slug: 'deportes', label: 'Deportes' },
-  { slug: 'editorial', label: 'Editorial' },
-  { slug: 'salud', label: 'A tu salud' },
-];
+import { Ticker } from './components/Ticker';
 
 export default function App() {
   // Rails exclude stories already shown in the lead section. While the lead
@@ -25,20 +21,33 @@ export default function App() {
         Saltar al contenido
       </a>
       <Masthead />
+      <NavBar />
+
       <main id="contenido" className="container">
+        <AdSlot size="leaderboard" slot="portada-top" className="ad-row" />
+        <Ticker />
+
         <SectionBoundary>
           <LeadStories />
+        </SectionBoundary>
+
+        <SectionBoundary>
+          <CategoryRail slug="deportes" label="Deportes" variant="feature" exclude={exclude} />
         </SectionBoundary>
 
         <SectionBoundary>
           <PrintEdition />
         </SectionBoundary>
 
-        {RAILS.map((rail) => (
-          <SectionBoundary key={rail.slug}>
-            <CategoryRail slug={rail.slug} label={rail.label} exclude={exclude} />
-          </SectionBoundary>
-        ))}
+        <SectionBoundary>
+          <CategoryRail slug="editorial" label="Editorial" variant="opinion" exclude={exclude} />
+        </SectionBoundary>
+
+        <AdSlot size="billboard" slot="portada-mid" className="ad-row" />
+
+        <SectionBoundary>
+          <CategoryRail slug="salud" label="A tu salud" variant="scroll" exclude={exclude} />
+        </SectionBoundary>
       </main>
       <Footer />
     </>

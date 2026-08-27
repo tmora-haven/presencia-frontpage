@@ -13,7 +13,9 @@ export function Masthead() {
       <div className="masthead__bar">
         <div className="container masthead__bar-inner">
           <span>{formatToday()}</span>
-          <span className="masthead__region">Noreste de Puerto Rico</span>
+          <a href={site.url} target="_blank" rel="noopener noreferrer" className="masthead__site">
+            {site.name} <span aria-hidden="true">↗</span>
+          </a>
         </div>
       </div>
       <div className="container masthead__brand">

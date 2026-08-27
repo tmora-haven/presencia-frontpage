@@ -173,6 +173,32 @@ export async function getCategoryFeed(
   };
 }
 
+export interface NavCategory {
+  id: number;
+  name: string;
+  slug: string;
+  url: string;
+  count: number;
+}
+
+const NAV_EXCLUDED = new Set(['uncategorized', 'sin-categoria']);
+
+/** Most-used categories, for the navigation. Menus require auth in WP, categories do not. */
+export async function getTopCategories(count: number, signal?: AbortSignal): Promise<NavCategory[]> {
+  const url = buildUrl('wp/v2/categories', {
+    per_page: count + NAV_EXCLUDED.size,
+    orderby: 'count',
+    order: 'desc',
+    hide_empty: 'true',
+    _fields: 'id,name,slug,link,count',
+  });
+  const cats = await getJson<(WpCategory & { link: string })[]>(url, signal);
+  return cats
+    .filter((c) => !NAV_EXCLUDED.has(c.slug))
+    .slice(0, count)
+    .map((c) => ({ id: c.id, name: decodeHtml(c.name), slug: c.slug, url: c.link, count: c.count }));
+}
+
 /** Print editions live in the custom post type `impreso`. */
 export async function getPrintEditions(count: number, signal?: AbortSignal): Promise<PrintEdition[]> {
   const url = buildUrl('wp/v2/impreso', {

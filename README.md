@@ -16,6 +16,10 @@ la fuente de verdad y esta aplicación lo consume como un *headless CMS*.
 | Caché, deduplicación y reintentos con *backoff* (TanStack Query) | `src/hooks/useWp.ts`, `src/queryClient.ts` |
 | Consultas dependientes (las secciones excluyen las noticias ya mostradas) | `App.tsx` → `CategoryRail` |
 | Custom post types (`impreso`) y taxonomías | `PrintEdition.tsx`, `CategoryRail.tsx` |
+| Menú derivado de la API (las categorías más usadas) con *drawer* móvil accesible | `NavBar.tsx` |
+| Espacios publicitarios etiquetados, con tamaño reservado (sin *layout shift*) | `AdSlot.tsx` |
+| Tres presentaciones de sección con un solo hook: destacada, opinión, carrusel | `CategoryRail.tsx` |
+| Ticker «Último minuto» (pausa al pasar el cursor, estático con *reduced motion*) | `Ticker.tsx` |
 | Estados de carga (*skeletons*), error por sección con reintento y vacíos | `SectionState.tsx`, `SectionBoundary.tsx` |
 | Seguridad: ningún HTML de la API llega al DOM | `src/lib/decodeHtml.ts` + pruebas |
 | Imágenes responsivas sin *layout shift* (`srcset`, `width/height`, `lazy`) | `ArticleCard.tsx`, `LeadStories.tsx` |
@@ -51,6 +55,15 @@ src/components/*         ← presentación pura; reciben datos ya seguros
 - **Configurable.** La URL del sitio viene de `VITE_WP_API_URL` y se valida al
   arrancar (debe ser `https://`). El mismo código funciona contra cualquier
   WordPress con la API REST pública.
+- **Menú sin autenticación.** WordPress protege `wp/v2/menus` con credenciales;
+  en lugar de exponer un token en el navegador, el menú se construye con las
+  categorías más publicadas (`orderby=count`), que coinciden con el menú real del
+  periódico y se mantienen solas.
+- **Publicidad honesta.** Cada `AdSlot` lleva la etiqueta visible «Publicidad»,
+  un `aria-label` equivalente y un `data-ad-slot` estable para el servidor de
+  anuncios. Reserva el tamaño estándar (970×90, 970×250, 300×250, 300×600 en
+  escritorio; 320×100 / 300×250 en móvil) para que cargar una creatividad no
+  mueva el contenido.
 - **CSS propio con tokens.** Sin frameworks de utilidades; `src/styles/tokens.css`
   define marca, tipografía y espaciado. El bundle completo pesa ~74 kB gzip.
 
@@ -69,7 +82,7 @@ npm run build             # producción en dist/ (desplegable en cualquier hosti
 npm run preview           # sirve dist/
 npm run typecheck         # TypeScript estricto
 npm run lint              # oxlint
-npm test                  # Vitest + Testing Library + MSW (20 pruebas)
+npm test                  # Vitest + Testing Library + MSW (23 pruebas)
 npm run e2e               # Playwright: smoke test estructural contra el sitio en vivo
 ```
 
@@ -104,7 +117,8 @@ src/
     format.ts            fechas en es-PR
     types.ts             tipos de la API y del dominio
   hooks/useWp.ts         hooks de TanStack Query
-  components/            Masthead, LeadStories, CategoryRail, PrintEdition, Footer, …
+  components/            Masthead, NavBar, Ticker, AdSlot, LeadStories (héroe + bento),
+                         CategoryRail (feature | opinion | scroll), PrintEdition, Footer, …
   styles/                tokens.css, global.css
   test/                  MSW, fixtures, helpers
 e2e/smoke.spec.ts        Playwright

@@ -10,6 +10,7 @@ import {
   getPrintEditions,
   getSiteInfo,
   getSiteLinks,
+  getTopCategories,
 } from '../lib/wpClient';
 
 export const LATEST_COUNT = 9; // index 0 is the hero, the rest fill the grid
@@ -23,7 +24,16 @@ export const wpKeys = {
     [...wpKeys.all, 'posts', 'category', slug, count, exclude] as const,
   print: (count: number) => [...wpKeys.all, 'impreso', count] as const,
   links: (slugs: string[]) => [...wpKeys.all, 'pages', slugs] as const,
+  nav: (count: number) => [...wpKeys.all, 'categories', 'top', count] as const,
 };
+
+export function useTopCategories(count = 9) {
+  return useQuery({
+    queryKey: wpKeys.nav(count),
+    queryFn: ({ signal }) => getTopCategories(count, signal),
+    staleTime: 24 * 60 * 60 * 1000,
+  });
+}
 
 export function useSiteInfo() {
   return useQuery({

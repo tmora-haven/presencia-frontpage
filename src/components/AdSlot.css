@@ -1,0 +1,94 @@
+.ad {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.ad__label {
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+
+.ad__block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  width: 100%;
+  color: var(--color-ink-muted);
+  background:
+    repeating-linear-gradient(-45deg, transparent 0 10px, rgb(0 0 0 / 0.025) 10px 20px),
+    var(--color-paper-tint);
+  border: 1px dashed #c9cdc6;
+  border-radius: var(--radius);
+}
+
+.ad__mark {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--color-paper);
+  background: var(--color-ink-muted);
+  border-radius: 999px;
+}
+
+.ad__text {
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
+.ad__spec {
+  font-size: var(--text-xs);
+  font-variant-numeric: tabular-nums;
+}
+
+.ad__spec-desktop {
+  display: none;
+}
+
+@media (min-width: 64rem) {
+  .ad__spec-desktop {
+    display: inline;
+  }
+
+  .ad__spec-mobile {
+    display: none;
+  }
+}
+
+/* Reserved sizes: mobile first, then desktop. */
+.ad--leaderboard .ad__block {
+  max-width: 320px;
+  aspect-ratio: 320 / 100;
+}
+
+.ad--billboard .ad__block,
+.ad--rectangle .ad__block,
+.ad--halfpage .ad__block {
+  max-width: 300px;
+  aspect-ratio: 300 / 250;
+}
+
+@media (min-width: 64rem) {
+  .ad--leaderboard .ad__block {
+    max-width: 970px;
+    aspect-ratio: 970 / 90;
+  }
+
+  .ad--billboard .ad__block {
+    max-width: 970px;
+    aspect-ratio: 970 / 250;
+  }
+
+  .ad--halfpage .ad__block {
+    aspect-ratio: 300 / 600;
+  }
+}
