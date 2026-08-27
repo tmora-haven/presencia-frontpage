@@ -1,0 +1,145 @@
+.ad {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  max-width: 100%;
+}
+
+.ad__label {
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+
+.ad__block {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  box-sizing: border-box;
+  max-width: 100%;
+  color: var(--color-ink-muted);
+  background:
+    repeating-linear-gradient(-45deg, transparent 0 10px, rgb(0 0 0 / 0.025) 10px 20px),
+    var(--color-paper-tint);
+  border: 1px dashed #c9cdc6;
+  border-radius: var(--radius);
+}
+
+.ad__mark {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--color-paper);
+  background: var(--color-ink-muted);
+  border-radius: 999px;
+}
+
+.ad__text {
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
+.ad__spec {
+  font-size: var(--text-xs);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Compact content for short formats */
+.ad--leaderboard .ad__block,
+.ad--billboard.ad--compact .ad__block {
+  flex-direction: row;
+  gap: var(--space-3);
+}
+
+.ad--leaderboard .ad__mark {
+  width: 1.75rem;
+  height: 1.75rem;
+  font-size: 0.625rem;
+}
+
+/* ---------- exact sizes: mobile (< 48rem) ---------- */
+.ad__spec--tablet,
+.ad__spec--desktop {
+  display: none;
+}
+
+.ad--leaderboard .ad__block {
+  width: 320px;
+  height: 100px;
+}
+
+.ad--billboard .ad__block,
+.ad--rectangle .ad__block,
+.ad--halfpage .ad__block {
+  width: 300px;
+  height: 250px;
+}
+
+/* ---------- tablet (48rem – 66rem) ---------- */
+@media (min-width: 48rem) {
+  .ad__spec--mobile {
+    display: none;
+  }
+
+  .ad__spec--tablet {
+    display: inline;
+  }
+
+  .ad--leaderboard .ad__block,
+  .ad--billboard .ad__block {
+    flex-direction: row;
+    gap: var(--space-3);
+    width: 728px;
+    height: 90px;
+  }
+
+  .ad--billboard .ad__mark {
+    width: 1.75rem;
+    height: 1.75rem;
+    font-size: 0.625rem;
+  }
+}
+
+/* ---------- desktop (≥ 66rem) ---------- */
+@media (min-width: 66rem) {
+  .ad__spec--tablet {
+    display: none;
+  }
+
+  .ad__spec--desktop {
+    display: inline;
+  }
+
+  .ad--leaderboard .ad__block {
+    width: 970px;
+    height: 90px;
+  }
+
+  .ad--billboard .ad__block {
+    flex-direction: column;
+    gap: var(--space-1);
+    width: 970px;
+    height: 250px;
+  }
+
+  .ad--billboard .ad__mark {
+    width: 2.25rem;
+    height: 2.25rem;
+    font-size: var(--text-xs);
+  }
+
+  .ad--halfpage .ad__block {
+    width: 300px;
+    height: 600px;
+  }
+}
