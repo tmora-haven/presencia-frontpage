@@ -24,7 +24,7 @@ export interface WpTerm {
   id: number;
   name: string;
   slug: string;
-  taxonomy: 'category' | 'post_tag' | string;
+  taxonomy: 'category' | 'post_tag' | 'pueblo' | string;
 }
 
 export interface WpAuthor {
@@ -83,6 +83,8 @@ export interface Article {
   publishedAt: string; // ISO 8601, UTC
   author: string | null;
   category: { name: string; slug: string } | null;
+  /** Custom taxonomy `pueblo` (municipality) used by the newsroom. */
+  pueblo: { name: string; slug: string } | null;
   image: ArticleImage | null;
 }
 

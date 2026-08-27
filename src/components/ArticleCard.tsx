@@ -1,5 +1,5 @@
 import type { Article } from '../lib/types';
-import { formatDate } from '../lib/format';
+import { Kicker } from './Kicker';
 import './ArticleCard.css';
 
 interface Props {
@@ -43,16 +43,13 @@ export function ArticleCard({
         )}
       </a>
       <div className="card__body">
-        {article.category ? <span className="card__kicker">{article.category.name}</span> : null}
+        <Kicker article={article} />
         <Heading className="card__title">
           <a className="headline-link" href={article.url} target="_blank" rel="noopener noreferrer">
             {article.title}
           </a>
         </Heading>
         {showExcerpt && article.excerpt ? <p className="card__excerpt">{article.excerpt}</p> : null}
-        <time className="card__date" dateTime={article.publishedAt}>
-          {formatDate(article.publishedAt)}
-        </time>
       </div>
     </article>
   );

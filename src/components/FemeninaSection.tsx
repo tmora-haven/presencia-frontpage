@@ -1,5 +1,5 @@
 import { useCategoryFeed, useChildCategories } from '../hooks/useWp';
-import { formatDate } from '../lib/format';
+import { Kicker } from './Kicker';
 import { SectionError, Skeleton } from './SectionState';
 import './FemeninaSection.css';
 
@@ -76,15 +76,12 @@ export function FemeninaSection({ exclude }: { exclude: number[] | undefined }) 
             )}
           </a>
           <div className="fem__lead-body">
-            {lead.category ? <span className="fem__kicker">{lead.category.name}</span> : null}
+            <Kicker article={lead} className="fem__kicker" />
             <h3 className="fem__lead-title">
               <a href={lead.url} target="_blank" rel="noopener noreferrer">{lead.title}</a>
             </h3>
             {lead.excerpt ? <p className="fem__excerpt">{lead.excerpt}</p> : null}
-            <p className="fem__meta">
-              {lead.author ? <span>{lead.author} · </span> : null}
-              <time dateTime={lead.publishedAt}>{formatDate(lead.publishedAt)}</time>
-            </p>
+            {lead.author ? <p className="fem__meta">{lead.author}</p> : null}
           </div>
         </article>
 
@@ -108,7 +105,7 @@ export function FemeninaSection({ exclude }: { exclude: number[] | undefined }) 
                     <div className="fem__placeholder" />
                   )}
                 </a>
-                {a.category ? <span className="fem__kicker">{a.category.name}</span> : null}
+                <Kicker article={a} className="fem__kicker" />
                 <h3 className="fem__card-title">
                   <a href={a.url} target="_blank" rel="noopener noreferrer">{a.title}</a>
                 </h3>

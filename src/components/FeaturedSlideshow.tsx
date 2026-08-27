@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import type { Article } from '../lib/types';
-import { formatDate, formatTime } from '../lib/format';
 import './FeaturedSlideshow.css';
 
 const AUTOPLAY_MS = 6000;
@@ -92,6 +91,7 @@ export function FeaturedSlideshow({ articles, titleAs: Title = 'h1' }: Props) {
                   <span className="slide__kicker">
                     <span className="slide__star" aria-hidden="true">★</span> Destacada
                     {a.category ? <> · {a.category.name}</> : null}
+                    {a.pueblo ? <span className="slide__pueblo"> · {a.pueblo.name}</span> : null}
                   </span>
                   {active ? (
                     <Title id="hero-title" className="slide__title">
@@ -103,12 +103,7 @@ export function FeaturedSlideshow({ articles, titleAs: Title = 'h1' }: Props) {
                     </p>
                   )}
                   {a.excerpt ? <p className="slide__excerpt">{a.excerpt}</p> : null}
-                  <p className="slide__meta">
-                    {a.author ? <span>{a.author} · </span> : null}
-                    <time dateTime={a.publishedAt}>
-                      {formatDate(a.publishedAt)}, {formatTime(a.publishedAt)}
-                    </time>
-                  </p>
+                  {a.author ? <p className="slide__meta">{a.author}</p> : null}
                 </div>
               </article>
             );

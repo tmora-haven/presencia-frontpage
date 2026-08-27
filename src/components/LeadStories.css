@@ -67,14 +67,6 @@
   color: var(--color-brand);
 }
 
-.hero__side-kicker {
-  font-size: var(--text-xs);
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-brand-deep);
-}
-
 .hero__side-headline {
   font-weight: 600;
   line-height: 1.3;

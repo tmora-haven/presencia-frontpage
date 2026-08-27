@@ -20,6 +20,15 @@
   }
 }
 
+@media (min-width: 64rem) {
+  .print__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    align-items: stretch;
+    gap: var(--space-10, 2.5rem);
+  }
+}
+
 /* ---------- current issue ---------- */
 .print__current {
   display: flex;
@@ -145,8 +154,29 @@
 
 /* ---------- previous editions strip ---------- */
 .print__previous {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
   padding-top: var(--space-6);
   border-top: 1px solid rgb(255 255 255 / 0.15);
+}
+
+@media (min-width: 64rem) {
+  .print__previous {
+    padding-top: 0;
+    padding-left: var(--space-10, 2.5rem);
+    border-top: 0;
+    border-left: 1px solid rgb(255 255 255 / 0.15);
+  }
+
+  .print__strip {
+    flex: 1;
+    align-items: stretch;
+  }
+
+  .print__item {
+    flex-basis: 10.5rem;
+  }
 }
 
 .print__previous-head {

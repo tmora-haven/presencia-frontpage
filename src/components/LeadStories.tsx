@@ -2,6 +2,7 @@ import { useFeatured, useLatest } from '../hooks/useWp';
 import { AdSlot } from './AdSlot';
 import { ArticleCard } from './ArticleCard';
 import { FeaturedSlideshow } from './FeaturedSlideshow';
+import { Kicker } from './Kicker';
 import { SectionHeading } from './SectionHeading';
 import { SectionError, Skeleton } from './SectionState';
 import './LeadStories.css';
@@ -61,7 +62,7 @@ export function LeadStories() {
               {side.map((a) => (
                 <li key={a.id}>
                   <a href={a.url} target="_blank" rel="noopener noreferrer">
-                    {a.category ? <span className="hero__side-kicker">{a.category.name}</span> : null}
+                    <Kicker article={a} />
                     <span className="hero__side-headline">{a.title}</span>
                   </a>
                 </li>

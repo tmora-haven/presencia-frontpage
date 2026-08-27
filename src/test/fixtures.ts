@@ -24,7 +24,13 @@ export function makePost(overrides: Partial<WpPost> & { id: number }): WpPost {
           },
         },
       ],
-      'wp:term': [[{ id: 21, name: 'Noticias', slug: 'noticias', taxonomy: 'category' }]],
+      'wp:term': [
+        [
+          { id: 21, name: 'Noticias', slug: 'noticias', taxonomy: 'category' },
+          { id: 4265, name: 'Regionales', slug: 'regionales', taxonomy: 'category' },
+        ],
+        [{ id: 5001, name: 'Río Grande', slug: 'rio-grande', taxonomy: 'pueblo' }],
+      ],
     },
     ...overrides,
   };

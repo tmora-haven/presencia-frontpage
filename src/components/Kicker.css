@@ -1,0 +1,28 @@
+.kicker {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-brand-deep);
+}
+
+.kicker__pueblo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  color: var(--color-ink-muted);
+}
+
+.kicker__pin {
+  width: 0.45em;
+  height: 0.45em;
+  background: currentColor;
+  border-radius: 999px;
+}

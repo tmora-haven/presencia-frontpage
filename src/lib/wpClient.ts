@@ -101,9 +101,14 @@ function pickImage(media: WpMedia | undefined): ArticleImage | null {
   };
 }
 
+/** Catch-all parent category: only used as a label when nothing more specific exists. */
+const GENERIC_CATEGORY = 'noticias';
+
 export function normalizePost(post: WpPost): Article {
   const terms = post._embedded?.['wp:term']?.flat() ?? [];
-  const category = terms.find((t) => t.taxonomy === 'category');
+  const categories = terms.filter((t) => t.taxonomy === 'category');
+  const category = categories.find((t) => t.slug !== GENERIC_CATEGORY) ?? categories[0];
+  const pueblo = terms.find((t) => t.taxonomy === 'pueblo');
   return {
     id: post.id,
     title: decodeHtml(post.title?.rendered),
@@ -112,6 +117,7 @@ export function normalizePost(post: WpPost): Article {
     publishedAt: `${post.date_gmt}Z`,
     author: post._embedded?.author?.[0]?.name ? decodeHtml(post._embedded.author[0].name) : null,
     category: category ? { name: decodeHtml(category.name), slug: category.slug } : null,
+    pueblo: pueblo ? { name: decodeHtml(pueblo.name), slug: pueblo.slug } : null,
     image: pickImage(post._embedded?.['wp:featuredmedia']?.[0]),
   };
 }

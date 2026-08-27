@@ -141,11 +141,6 @@
   color: var(--color-ink);
 }
 
-.opinion__author::after {
-  content: '·';
-  margin-left: var(--space-2);
-}
-
 /* ---------- scroll: snap carousel → grid ---------- */
 .scroll {
   display: flex;

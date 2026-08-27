@@ -1,6 +1,6 @@
 import { useCategoryFeed } from '../hooks/useWp';
 import type { Article } from '../lib/types';
-import { formatDate } from '../lib/format';
+import { Kicker } from './Kicker';
 import { AdSlot } from './AdSlot';
 import { ArticleCard } from './ArticleCard';
 import { SectionHeading } from './SectionHeading';
@@ -108,16 +108,14 @@ function OpinionLayout({ articles }: { articles: Article[] }) {
               “
             </span>
           </a>
+          <Kicker article={a} />
           <h3 className="opinion__title">
             <a className="headline-link" href={a.url} target="_blank" rel="noopener noreferrer">
               {a.title}
             </a>
           </h3>
           {a.excerpt ? <p className="opinion__excerpt">{a.excerpt}</p> : null}
-          <p className="opinion__meta">
-            {a.author ? <span className="opinion__author">{a.author}</span> : null}
-            <time dateTime={a.publishedAt}>{formatDate(a.publishedAt)}</time>
-          </p>
+          {a.author ? <p className="opinion__meta"><span className="opinion__author">{a.author}</span></p> : null}
         </article>
       ))}
     </div>

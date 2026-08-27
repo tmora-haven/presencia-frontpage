@@ -11,7 +11,8 @@ describe('normalizePost', () => {
     expect(article.excerpt).toBe('Resumen de la noticia…');
     expect(article.publishedAt).toBe('2026-08-27T14:30:00Z');
     expect(article.author).toBe('Redacción Presencia');
-    expect(article.category).toEqual({ name: 'Noticias', slug: 'noticias' });
+    expect(article.category).toEqual({ name: 'Regionales', slug: 'regionales' }); // prefers the specific one over "Noticias"
+    expect(article.pueblo).toEqual({ name: 'Río Grande', slug: 'rio-grande' });
     expect(article.image).toMatchObject({ src: 'https://example.test/img-7-768.jpg', width: 768, height: 576 });
     expect(article.image?.srcSet).toContain('300w');
     expect(article.image?.srcSet).toContain('1024w');
@@ -22,6 +23,7 @@ describe('normalizePost', () => {
     expect(article.image).toBeNull();
     expect(article.author).toBeNull();
     expect(article.category).toBeNull();
+    expect(article.pueblo).toBeNull();
     expect(article.excerpt).toBe('');
   });
 });

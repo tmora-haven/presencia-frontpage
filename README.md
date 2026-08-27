@@ -15,7 +15,7 @@ la fuente de verdad y esta aplicación lo consume como un *headless CMS*.
 | Consumo tipado de la API REST (`wp/v2`) con `_embed` y `_fields` | `src/lib/wpClient.ts` |
 | Caché, deduplicación y reintentos con *backoff* (TanStack Query) | `src/hooks/useWp.ts`, `src/queryClient.ts` |
 | Consultas dependientes (las secciones excluyen las noticias ya mostradas) | `App.tsx` → `CategoryRail` |
-| Custom post types (`impreso`) y taxonomías | `PrintEdition.tsx`, `CategoryRail.tsx` |
+| Custom post types (`impreso`) y taxonomías personalizadas (`pueblo` junto a la categoría) | `PrintEdition.tsx`, `Kicker.tsx` |
 | Menú derivado de la API (las categorías más usadas) con *drawer* móvil accesible | `NavBar.tsx` |
 | Espacios publicitarios etiquetados, con tamaño reservado (sin *layout shift*) | `AdSlot.tsx` |
 | Tres presentaciones de sección con un solo hook: destacada, opinión, carrusel | `CategoryRail.tsx` |
@@ -87,7 +87,7 @@ npm run build             # producción en dist/ (desplegable en cualquier hosti
 npm run preview           # sirve dist/
 npm run typecheck         # TypeScript estricto
 npm run lint              # oxlint
-npm test                  # Vitest + Testing Library + MSW (35 pruebas)
+npm test                  # Vitest + Testing Library + MSW (36 pruebas)
 npm run e2e               # Playwright: smoke test estructural contra el sitio en vivo
 ```
 
