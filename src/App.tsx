@@ -8,7 +8,6 @@ import { LeadStories } from './components/LeadStories';
 import { Masthead } from './components/Masthead';
 import { NavBar } from './components/NavBar';
 import { PalabraSection } from './components/PalabraSection';
-import { PrintEdition } from './components/PrintEdition';
 import { SectionBoundary } from './components/SectionBoundary';
 import { Ticker } from './components/Ticker';
 
@@ -47,10 +46,6 @@ export default function App() {
 
         <SectionBoundary>
           <CategoryRail slug="deportes" label="Deportes" variant="feature" exclude={exclude} />
-        </SectionBoundary>
-
-        <SectionBoundary>
-          <PrintEdition />
         </SectionBoundary>
 
         <SectionBoundary>

@@ -11,7 +11,7 @@ const ARCHIVE_URL = 'https://presenciapr.com/impreso/';
  * the ten previous issues sit in a snap-scrolling strip with prev/next controls.
  * Hidden entirely on error/empty — it's a bonus, not a dependency.
  */
-export function PrintEdition() {
+export function PrintEdition({ compact = false }: { compact?: boolean }) {
   const { data } = usePrintEditions();
   const strip = useRef<HTMLUListElement>(null);
   if (!data || data.length === 0) return null;
@@ -25,7 +25,7 @@ export function PrintEdition() {
   };
 
   return (
-    <section className="print" aria-labelledby="print-title">
+    <section className={`print ${compact ? 'print--compact' : ''}`} aria-labelledby="print-title">
       <div className="print__inner">
         <div className="print__current">
           <Cover edition={current} sizes="(min-width: 40rem) 16rem, 60vw" eager />
@@ -40,9 +40,11 @@ export function PrintEdition() {
             <p className="print__date">
               <time dateTime={current.publishedAt}>{formatDate(current.publishedAt)}</time>
             </p>
-            <p className="print__blurb">
-              La edición semanal completa, tal como llega a los hogares del Noreste, gratis y en formato digital.
-            </p>
+            {!compact ? (
+              <p className="print__blurb">
+                La edición semanal completa, tal como llega a los hogares del Noreste, gratis y en formato digital.
+              </p>
+            ) : null}
             <div className="print__actions">
               <a className="print__cta" href={current.url} target="_blank" rel="noopener noreferrer">
                 Leer la edición digital

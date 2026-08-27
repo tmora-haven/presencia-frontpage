@@ -267,3 +267,53 @@
     animation: none;
   }
 }
+
+/* ---------- compact: lives under the hero slideshow ---------- */
+.print--compact {
+  margin: var(--space-6) 0 0;
+}
+
+.print--compact .print__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding: var(--space-6);
+}
+
+.print--compact .print__current {
+  gap: var(--space-6);
+}
+
+.print--compact .print__current > .print__cover {
+  width: clamp(7rem, 22vw, 9.5rem);
+}
+
+.print--compact .print__title {
+  font-size: var(--text-2xl);
+}
+
+.print--compact .print__body {
+  flex-basis: 14rem;
+}
+
+.print--compact .print__actions {
+  margin-top: var(--space-2);
+}
+
+.print--compact .print__cta {
+  padding: var(--space-2) var(--space-4);
+}
+
+.print--compact .print__previous {
+  padding: var(--space-6) 0 0;
+  border-top: 1px solid rgb(255 255 255 / 0.15);
+  border-left: 0;
+}
+
+.print--compact .print__item {
+  flex-basis: 7.5rem;
+}
+
+.print--compact .print__item-date {
+  display: none;
+}

@@ -9,8 +9,13 @@
 @media (min-width: 64rem) {
   .hero {
     grid-template-columns: 2fr 1fr;
+    align-items: start; /* never stretch the slideshow to the side column's height */
     gap: var(--space-10, 2.5rem);
   }
+}
+
+.hero__main-col {
+  min-width: 0;
 }
 
 .hero__main {

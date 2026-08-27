@@ -3,6 +3,8 @@ import { AdSlot } from './AdSlot';
 import { ArticleCard } from './ArticleCard';
 import { FeaturedSlideshow } from './FeaturedSlideshow';
 import { Kicker } from './Kicker';
+import { PrintEdition } from './PrintEdition';
+import { SectionBoundary } from './SectionBoundary';
 import { SectionHeading } from './SectionHeading';
 import { SectionError, Skeleton } from './SectionState';
 import './LeadStories.css';
@@ -53,7 +55,12 @@ export function LeadStories() {
   return (
     <>
       <section className="hero" aria-labelledby="hero-title">
-        {slides ? <FeaturedSlideshow articles={slides} /> : <div className="hero__main" aria-busy="true"><Skeleton variant="hero" /></div>}
+        <div className="hero__main-col">
+          {slides ? <FeaturedSlideshow articles={slides} /> : <div className="hero__main" aria-busy="true"><Skeleton variant="hero" /></div>}
+          <SectionBoundary>
+            <PrintEdition compact />
+          </SectionBoundary>
+        </div>
 
         {side.length > 0 ? (
           <aside className="hero__side" aria-label="Lo más reciente">
